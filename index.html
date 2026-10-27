@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CRIPPIN // CONSOLE</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://api.coingecko.com; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="CRIPPIN: a retro console for learning about crypto tokens. Live prices, plain-language ratings.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bf" viewBox="0 0 100 80">
+    <g stroke="#111" stroke-width="3" stroke-linejoin="round" fill="currentColor">
+      <path d="M50 38 C38 4 6 0 6 26 C6 42 30 46 50 38 Z"/>
+      <path d="M50 38 C62 4 94 0 94 26 C94 42 70 46 50 38 Z"/>
+      <path d="M50 40 C34 46 14 52 20 68 C26 80 46 70 50 40 Z"/>
+      <path d="M50 40 C66 46 86 52 80 68 C74 80 54 70 50 40 Z"/>
+    </g>
+    <circle cx="24" cy="22" r="5" fill="#fff" opacity=".9"/><circle cx="76" cy="22" r="5" fill="#fff" opacity=".9"/>
+    <circle cx="31" cy="64" r="4" fill="#fff" opacity=".9"/><circle cx="69" cy="64" r="4" fill="#fff" opacity=".9"/>
+    <path d="M49 30 Q44 14 36 10 M51 30 Q56 14 64 10" stroke="#111" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="50" cy="44" rx="3.5" ry="16" fill="#111"/>
+  </symbol>
+</svg>
+
+<svg class="bf" style="top:90px;left:1.5%;width:92px;transform:rotate(-22deg)" viewBox="0 0 100 80"><use href="#bf" style="color:#ff4fa3"/></svg>
+<svg class="bf" style="top:300px;right:1%;width:78px;transform:rotate(18deg)" viewBox="0 0 100 80"><use href="#bf" style="color:#ffee33"/></svg>
+<svg class="bf" style="top:640px;left:.8%;width:70px;transform:rotate(12deg)" viewBox="0 0 100 80"><use href="#bf" style="color:#2f8fff"/></svg>
+<svg class="bf" style="top:900px;right:1.4%;width:96px;transform:rotate(-14deg)" viewBox="0 0 100 80"><use href="#bf" style="color:#ff4fa3"/></svg>
+<svg class="bf" style="top:1250px;left:1.2%;width:84px;transform:rotate(26deg)" viewBox="0 0 100 80"><use href="#bf" style="color:#46ff7f"/></svg>
+
+<div class="shell">
+
+  <div class="top">
+    <div class="brand">CRIPPIN CONSOLE<small>Keep scrolling, little man!</small></div>
+    <div class="nav">
+      <a class="on" href="#">OVERVIEW</a><a href="#">TOKENS</a><a href="#">STORIES</a>
+      <a href="#">EVIDENCE</a><a href="#">LEGISLATION</a><a href="#">LORE</a>
+    </div>
+    <div class="badge">99</div>
+  </div>
+
+  <div class="board">
+
+    <div class="p stat y c3"><div class="k1">TOKENS TRACKED</div><div class="v" id="statTok">000</div><div class="d">live count</div></div>
+    <div class="p stat k c3"><div class="k1">STORIES LOGGED</div><div class="v">000</div><div class="d">sample count</div></div>
+    <div class="p stat b c3"><div class="k1">EVIDENCE FILES</div><div class="v">000</div><div class="d">sample count</div></div>
+    <div class="p stat g c3"><div class="k1">BILLS WATCHED</div><div class="v">000</div><div class="d">sample count</div></div>
+
+    <!-- token select -->
+    <div class="p tok c8">
+      <div class="burst-wrap" style="top:-34px;right:-22px;transform:rotate(12deg)">
+        <svg viewBox="0 0 100 100"><polygon class="burst" fill="#ffee33" stroke="#111" stroke-width="3"/>
+        <text x="50" y="46" text-anchor="middle" font-family="Press Start 2P" font-size="10" fill="#111">NO</text>
+        <text x="50" y="63" text-anchor="middle" font-family="Press Start 2P" font-size="8" fill="#ff3045">SCAMS!</text></svg>
+      </div>
+      <div class="ph y"><h3>SELECT TOKEN</h3><div class="tag">VETTED LIST // LIVE</div></div>
+      <div class="tokwrap">
+        <div class="sel">
+          <div class="lab"><span class="a"><small>RANK</small><span id="selRank">--</span></span><span class="b"><small>BUZZ</small><span id="selBpm">107</span>bpm</span></div>
+          <div class="banner"><b id="selName">EXAMPLE TOKEN 01</b><span id="selTick">/EX1</span></div>
+          <svg id="radar" class="radar" viewBox="0 0 200 200"></svg>
+        </div>
+        <div class="tlist" id="tlist"></div>
+      </div>
+    </div>
+
+    <!-- zone load + bills -->
+    <div class="p c4">
+      <div class="ph k"><h3>ZONE LOAD</h3><div class="tag">SAMPLE</div></div>
+      <div class="pb">
+        <div class="gauges">
+          <div class="g1">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="#021a26" stroke-width="15"/><circle cx="50" cy="50" r="38" fill="none" stroke="#06303f" stroke-width="9"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#2f8fff" stroke-width="9" stroke-dasharray="167 239" transform="rotate(-90 50 50)"/>
+            <text x="50" y="58" text-anchor="middle" fill="#eaffff" font-size="14" font-family="Press Start 2P">70</text></svg>
+            <div class="l">UNDERGRID</div>
+          </div>
+          <div class="g1">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="#021a26" stroke-width="15"/><circle cx="50" cy="50" r="38" fill="none" stroke="#06303f" stroke-width="9"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#ff9a2e" stroke-width="9" stroke-dasharray="107 239" transform="rotate(-90 50 50)"/>
+            <text x="50" y="58" text-anchor="middle" fill="#eaffff" font-size="14" font-family="Press Start 2P">45</text></svg>
+            <div class="l">DRIFT</div>
+          </div>
+          <div class="g1">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="#021a26" stroke-width="15"/><circle cx="50" cy="50" r="38" fill="none" stroke="#06303f" stroke-width="9"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#ff4fa3" stroke-width="9" stroke-dasharray="205 239" transform="rotate(-90 50 50)"/>
+            <text x="50" y="58" text-anchor="middle" fill="#eaffff" font-size="14" font-family="Press Start 2P">86</text></svg>
+            <div class="l">RISING</div>
+          </div>
+        </div>
+        <div class="bill"><span><b>PLACEHOLDER BILL</b><i>status text goes here</i></span><span class="sticker y">PENDING</span></div>
+        <div class="bill"><span><b>PLACEHOLDER BILL</b><i>status text goes here</i></span><span class="sticker b">COMMITTEE</span></div>
+        <div class="bill"><span><b>PLACEHOLDER BILL</b><i>status text goes here</i></span><span class="sticker k">STALLED</span></div>
+      </div>
+    </div>
+
+    <!-- signal chart -->
+    <div class="p c8">
+      <div class="ph b"><h3>SIGNAL ACTIVITY</h3><div class="tag">ALL ZONES // SAMPLE DATA</div></div>
+      <div class="pb">
+        <svg viewBox="0 0 760 240" preserveAspectRatio="none" style="height:240px">
+          <g stroke="#14515c" stroke-width="1.5">
+            <line x1="0" y1="40" x2="760" y2="40"/><line x1="0" y1="90" x2="760" y2="90"/>
+            <line x1="0" y1="140" x2="760" y2="140"/><line x1="0" y1="190" x2="760" y2="190"/>
+          </g>
+          <path d="M0,190 L30,170 L60,178 L90,140 L120,155 L150,118 L180,132 L210,96 L240,110 L270,72 L300,104 L330,84 L360,126 L390,100 L420,116 L450,78 L480,90 L510,54 L540,84 L570,60 L600,92 L630,70 L660,46 L700,62 L760,38 L760,240 L0,240 Z" fill="#46ff7f" fill-opacity=".22"/>
+          <path d="M0,190 L30,170 L60,178 L90,140 L120,155 L150,118 L180,132 L210,96 L240,110 L270,72 L300,104 L330,84 L360,126 L390,100 L420,116 L450,78 L480,90 L510,54 L540,84 L570,60 L600,92 L630,70 L660,46 L700,62 L760,38" fill="none" stroke="#46ff7f" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M0,215 L60,205 L120,210 L180,190 L240,196 L300,175 L360,182 L420,165 L480,170 L540,150 L600,158 L660,140 L760,132" fill="none" stroke="#ffee33" stroke-width="2.5" stroke-dasharray="8 6"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- news -->
+    <div class="p c4">
+      <div class="ph g"><h3>NEWS STORIES</h3><div class="tag">FEED // SAMPLE</div></div>
+      <div class="pb">
+        <div class="row"><span class="t">03:14</span><span class="sticker y">UNDERGRID</span><span>story headline placeholder</span></div>
+        <div class="row"><span class="t">03:41</span><span class="sticker b">DRIFT</span><span>story headline placeholder</span></div>
+        <div class="row"><span class="t">04:02</span><span class="sticker k">RISING</span><span>story headline placeholder</span></div>
+        <div class="row"><span class="t">04:27</span><span class="sticker b">DRIFT</span><span>story headline placeholder</span></div>
+        <div class="row"><span class="t">05:10</span><span class="sticker y">UNDERGRID</span><span>story headline placeholder</span></div>
+      </div>
+    </div>
+
+    <!-- evidence -->
+    <div class="p c4">
+      <div class="ph o"><h3>EVIDENCE</h3><div class="tag">VAULT // SAMPLE</div></div>
+      <div class="pb">
+        <div class="row"><span class="sticker g">FILE-001</span><span>document / screenshot / thread slot</span></div>
+        <div class="row"><span class="sticker g">FILE-002</span><span>document / screenshot / thread slot</span></div>
+        <div class="row"><span class="sticker g">FILE-003</span><span>document / screenshot / thread slot</span></div>
+        <div class="row"><span class="sticker g">FILE-004</span><span>document / screenshot / thread slot</span></div>
+      </div>
+    </div>
+
+    <!-- legislation -->
+    <div class="p c4">
+      <div class="ph k"><h3>LEGISLATION</h3><div class="tag">WATCHLIST // SAMPLE</div></div>
+      <div class="pb">
+        <svg viewBox="0 0 300 96">
+          <g font-family="IBM Plex Mono" font-weight="500" font-size="10" fill="#8fe8b2">
+            <text x="0" y="16">BILL A</text><text x="0" y="50">BILL B</text><text x="0" y="84">BILL C</text>
+          </g>
+          <g stroke="#021a26" stroke-width="3">
+            <rect x="52" y="4" width="240" height="16" fill="#06303f"/><rect x="52" y="4" width="170" height="16" fill="#2f8fff"/>
+            <rect x="52" y="38" width="240" height="16" fill="#06303f"/><rect x="52" y="38" width="110" height="16" fill="#ff9a2e"/>
+            <rect x="52" y="72" width="240" height="16" fill="#06303f"/><rect x="52" y="72" width="60" height="16" fill="#ff4fa3"/>
+          </g>
+        </svg>
+        <div class="row" style="margin-top:6px"><span>progress bars show how far each bill has made it</span></div>
+      </div>
+    </div>
+
+    <!-- lore -->
+    <div class="p c4">
+      <div class="burst-wrap" style="top:-38px;right:-18px;width:92px;height:92px;transform:rotate(-10deg)">
+        <svg viewBox="0 0 100 100"><polygon class="burst" fill="#ff4fa3" stroke="#111" stroke-width="3"/>
+        <text x="50" y="46" text-anchor="middle" font-family="Press Start 2P" font-size="10" fill="#fff" stroke="#111" stroke-width=".4">FREE</text>
+        <text x="50" y="64" text-anchor="middle" font-family="Press Start 2P" font-size="7" fill="#111">TO READ</text></svg>
+      </div>
+      <div class="ph y"><h3>THE LITTLE MAN RISES</h3><div class="tag">LORE</div></div>
+      <div class="pb">
+        <div class="caption">MEANWHILE, IN THE UNDERGRID...</div>
+        <div style="line-height:1.6">Lore text lives here. A running narrative for the world behind the archive: chapters, faction notes, field reports. A record, not a pitch. Nothing for sale.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><span class="n">MODULE-01</span><span class="x">ZONE MAP</span><span class="s">EMPTY SLOT</span></div>
+    <div class="tile"><span class="n">MODULE-02</span><span class="x">SENTIMENT</span><span class="s">EMPTY SLOT</span></div>
+    <div class="tile"><span class="n">MODULE-03</span><span class="x">WALLET WATCH</span><span class="s">EMPTY SLOT</span></div>
+    <div class="tile"><span class="n">MODULE-04</span><span class="x">TIMELINE</span><span class="s">EMPTY SLOT</span></div>
+    <div class="tile"><span class="n">MODULE-05</span><span class="x">PEOPLE</span><span class="s">EMPTY SLOT</span></div>
+    <div class="tile"><span class="n">MODULE-06</span><span class="x">GLOSSARY</span><span class="s">EMPTY SLOT</span></div>
+  </div>
+
+  <div class="foot"><footer>CRIPPIN ARCHIVE // PRICES: COINGECKO // NOT FINANCIAL ADVICE // EMPTY SLOTS ARE PLACEHOLDERS</footer></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
