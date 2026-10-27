@@ -32,7 +32,7 @@
      - All text from the network goes through textContent (never innerHTML),
        so even a hostile API response can't inject script into the page.
      - Rows are built in JS from the config, so the page and the data can't drift apart. */
-  var API='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&price_change_percentage=24h,7d&ids=';
+  var API='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&price_change_percentage=24h,7d&sparkline=true&ids=';
   var REFRESH_MS=60000;
 
   // launch = year the network went live (a fact, used for the AGE stat)
@@ -94,6 +94,30 @@
     raf=requestAnimationFrame(step);
   }
 
+  /* ---- 7-day price chart for the selected token ----
+     Why: the line is just the price points scaled to fit the box. Find min and max,
+     map each price to a y position between them, and join the dots into a path.
+     The SVG is stretched to fit (preserveAspectRatio=none), so it stays crisp at any width. */
+  var chartPanel=[].slice.call(document.querySelectorAll('.board > .p')).filter(function(p){ var h=p.querySelector('.ph h3'); return h&&h.textContent.trim()==='SIGNAL ACTIVITY'; })[0];
+  var chartSvg=chartPanel&&chartPanel.querySelector('svg'), chartTag=chartPanel&&chartPanel.querySelector('.tag');
+  var NS='http://www.w3.org/2000/svg';
+  function node(n,attrs){ var e=document.createElementNS(NS,n); for(var k in attrs) e.setAttribute(k,attrs[k]); return e; }
+  function drawSpark(t){
+    if(!chartSvg) return;
+    while(chartSvg.firstChild) chartSvg.removeChild(chartSvg.firstChild);
+    var g=node('g',{stroke:'#14515c','stroke-width':'1.5'});
+    [40,90,140,190].forEach(function(y){ g.appendChild(node('line',{x1:0,y1:y,x2:760,y2:y})); });
+    chartSvg.appendChild(g);
+    var pts=t&&t.spark;
+    if(chartTag) chartTag.textContent=(t?t.name:'--')+' // 7 DAY PRICE // '+(pts?'LIVE':'LOADING');
+    if(!pts||pts.length<2) return;
+    var lo=Math.min.apply(null,pts), hi=Math.max.apply(null,pts), span=(hi-lo)||1;
+    var line=pts.map(function(p,i){ return (i?'L':'M')+(i/(pts.length-1)*760).toFixed(1)+','+(210-(p-lo)/span*180).toFixed(1); }).join(' ');
+    var col=pts[pts.length-1]>=pts[0]?'#46ff7f':'#ff4fa3';
+    chartSvg.appendChild(node('path',{d:line+' L760,240 L0,240 Z',fill:col,'fill-opacity':'.22'}));
+    chartSvg.appendChild(node('path',{d:line,fill:'none',stroke:col,'stroke-width':'3','stroke-linejoin':'round'}));
+  }
+
   /* ---- build the list ---- */
   var tlist=document.getElementById('tlist'), selected=null;
   function make(t){
@@ -130,12 +154,13 @@
     document.getElementById('selRank').textContent=t.rank?ord(t.rank):'--';
     document.getElementById('selBpm').textContent=t.scores?Math.round(60+t.scores[4]*0.9):'--';
     tween(t.scores||[0,0,0,0,0]);
+    drawSpark(t);
   }
 
   /* ---- fetch + refresh ---- */
   function apply(arr){
     arr.forEach(function(d){
-      TOKENS.forEach(function(t){ if(t.id===d.id){ t.data=d; t.scores=scoreOf(d,t); } });
+      TOKENS.forEach(function(t){ if(t.id===d.id){ t.data=d; t.scores=scoreOf(d,t); t.spark=(d.sparkline_in_7d&&Array.isArray(d.sparkline_in_7d.price))?d.sparkline_in_7d.price.map(num):null; } });
     });
     TOKENS.filter(function(t){return t.scores;})
       .sort(function(a,b){ return avg(b.scores)-avg(a.scores); })
@@ -190,4 +215,38 @@
   if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(build); }
   window.addEventListener('load', build);
   var t; window.addEventListener('resize', function(){ clearTimeout(t); t=setTimeout(build,200); });
+})();
+
+/* ---- working nav: each tab shows its own panels; the URL hash remembers the tab ---- */
+(function(){
+  var VIEWS={
+    overview:null,
+    tokens:['SELECT TOKEN','SIGNAL ACTIVITY'],
+    stories:['NEWS STORIES'],
+    evidence:['EVIDENCE'],
+    legislation:['LEGISLATION','ZONE LOAD'],
+    lore:['THE LITTLE MAN RISES']
+  };
+  var links=[].slice.call(document.querySelectorAll('.nav a')),
+      panels=[].slice.call(document.querySelectorAll('.board > .p')),
+      tiles=document.querySelector('.tiles');
+  panels.forEach(function(p){ var h=p.querySelector('.ph h3'); p.dataset.title=h?h.textContent.trim():''; });
+  links.forEach(function(a){ var v=a.textContent.trim().toLowerCase(); a.dataset.view=v; a.setAttribute('href','#'+v); });
+  function show(view){
+    if(!Object.prototype.hasOwnProperty.call(VIEWS,view)) view='overview';
+    var list=VIEWS[view];
+    panels.forEach(function(p){
+      var on=!list||list.indexOf(p.dataset.title)>-1;
+      p.hidden=!on; p.classList.toggle('wide',!!list&&on);
+    });
+    if(tiles) tiles.hidden=!!list;
+    links.forEach(function(a){
+      var on=a.dataset.view===view; a.classList.toggle('on',on);
+      if(on) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+    });
+    document.title='CRIPPIN // '+view.toUpperCase();
+    window.dispatchEvent(new Event('resize'));   // re-sizes the pixel header effect on newly shown panels
+  }
+  window.addEventListener('hashchange',function(){ show(location.hash.slice(1)); });
+  show(location.hash.slice(1));
 })();

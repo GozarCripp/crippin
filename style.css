@@ -214,3 +214,7 @@
 @keyframes sweep{ to{ transform:rotate(360deg); } }
 .trow:focus-visible{ outline:3px solid var(--yellow); outline-offset:2px; }
 @media (prefers-reduced-motion: reduce){ .sweep,#radarPoly{ animation:none; } }
+
+/* ---- nav views ---- */
+.board > .p[hidden], .tiles[hidden]{ display:none; }
+.board > .p.wide{ grid-column:span 12; }
