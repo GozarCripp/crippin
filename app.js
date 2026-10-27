@@ -60,7 +60,7 @@
      VOLUME    24h trading volume on a log scale ($10M = 0, $10B = 100)
      AGE       years since launch, capped at 12 years = 100
      LIQUIDITY turnover = volume / market cap (0.15 or more = 100). High turnover = easy to trade
-     BUZZ      how much the price is moving (24h move x12 + 7d move x3, capped at 100)
+     BUZZ      price movement (24h x10 + 7d x2) plus recent news mentions (x8 each), capped at 100
      Log scales are used because money spans huge ranges; a straight line would
      squash everything but Bitcoin to zero. */
   function scoreOf(d,t){
@@ -71,7 +71,7 @@
       clamp(100*Math.log10(vol/1e7)/3),
       clamp((new Date().getFullYear()-t.launch)/12*100),
       clamp(num(d.total_volume)/cap/0.15*100),
-      clamp(a24*12+a7*3)
+      clamp(a24*10+a7*2+(t.news||0)*8)
     ].map(Math.round);
   }
   function avg(a){ return a.reduce(function(s,x){return s+x;},0)/a.length; }
@@ -183,6 +183,13 @@
         TOKENS.forEach(function(t){ if(!t.data) t.sm.textContent=t.tick+' // feed offline'; });
       });
   }
+  // news mentions per coin (from the daily news file) feed the BUZZ stat
+  document.addEventListener('crippin:news',function(e){
+    var c=(e.detail&&e.detail.buzz&&e.detail.buzz.coins)||{};
+    TOKENS.forEach(function(t){ t.news=Math.min(num(c[t.name]),10); });
+    var have=TOKENS.filter(function(t){return t.data;});
+    if(have.length) apply(have.map(function(t){return t.data;}));
+  });
   document.getElementById('statTok').textContent=('00'+TOKENS.length).slice(-3);
   choose(TOKENS[0]);
   refresh();
@@ -249,4 +256,84 @@
   }
   window.addEventListener('hashchange',function(){ show(location.hash.slice(1)); });
   show(location.hash.slice(1));
+})();
+
+/* ---- daily news: reads data/news.json (written once a day by the GitHub Action) ----
+   Why: a static site can't safely call news sites itself (blocked by browsers, and keys would leak).
+   A scheduled job collects headlines into one small file; the page just reads that file.
+   Everything is inserted with textContent, and links must be https, so a bad feed can't inject code. */
+(function(){
+  function el(tag,cls,text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  function panel(title){
+    return [].slice.call(document.querySelectorAll('.board > .p')).filter(function(p){
+      var h=p.querySelector('.ph h3'); return h&&h.textContent.trim()===title; })[0];
+  }
+  function ago(iso){
+    var m=Math.max(0,(Date.now()-Date.parse(iso))/6e4);
+    if(!isFinite(m)) return '--';
+    return m<60?Math.round(m)+'m':m<1440?Math.round(m/60)+'h':Math.round(m/1440)+'d';
+  }
+  var STICK={XRP:'b',HBAR:'g',XLM:'k',CRYPTO:'y'}, LSTICK=['y','k','b','g'];
+  function storyRow(s,cls){
+    var row=el('div','row'), body=el('span');
+    row.appendChild(el('span','t',ago(s.published)));
+    row.appendChild(el('span','sticker '+cls,String(s.tag||'')));
+    var a=el('a',null,s.title); a.href=/^https:\/\//i.test(s.url)?s.url:'#';
+    a.target='_blank'; a.rel='noopener noreferrer nofollow';
+    body.appendChild(a); body.appendChild(el('span','src',s.source));
+    row.appendChild(body); return row;
+  }
+  function fill(box,rows,empty){
+    while(box.firstChild) box.removeChild(box.firstChild);
+    if(!rows.length) box.appendChild(el('div','row',empty));
+    rows.forEach(function(r){ box.appendChild(r); });
+  }
+  function level(b){ return b>=60?['HOT','k']:b>=30?['WARM','y']:['CALM','b']; }
+
+  var data=null;
+  function render(){
+    if(!data) return;
+    var wide=location.hash==='#stories';
+    var np=panel('NEWS STORIES'), lp=panel('LEGISLATION'), zp=panel('ZONE LOAD');
+    var stamp=data.updated?('UPDATED '+data.updated.slice(0,10)+' // HEADLINES LINK TO SOURCES'):'FIRST UPDATE PENDING';
+    if(np){
+      var rows=(data.stories||[]).slice(0,wide?12:5).map(function(s){ return storyRow(s,STICK[s.tag]||'y'); });
+      var box=np.querySelector('.pb');
+      fill(box,rows,'NEWS UPDATES DAILY // FIRST RUN PENDING');
+      box.appendChild(el('div','row',stamp));
+      var tag=np.querySelector('.tag'); if(tag) tag.textContent='FEED // DAILY';
+    }
+    var topics=(data.buzz&&data.buzz.topics)||[];
+    if(lp){
+      var lb=lp.querySelector('.pb'); while(lb.firstChild) lb.removeChild(lb.firstChild);
+      topics.forEach(function(t){
+        var lv=level(t.buzz), r=el('div','bill'), left=el('span');
+        left.appendChild(el('b',null,t.name)); left.appendChild(el('i',null,t.count+' stories // last 3 days'));
+        var bar=el('div','bar'), fillb=el('i'); fillb.style.width=Math.max(4,t.buzz)+'%'; bar.appendChild(fillb);
+        left.appendChild(bar);
+        r.appendChild(left); r.appendChild(el('span','sticker '+lv[1],lv[0]+' '+t.buzz)); lb.appendChild(r);
+      });
+      (data.legislation||[]).slice(0,wide?8:5).forEach(function(s,i){ lb.appendChild(storyRow(s,LSTICK[i%4])); });
+      if(!topics.length) lb.appendChild(el('div','row','BILL + TOKENIZATION BUZZ UPDATES DAILY // FIRST RUN PENDING'));
+      var lt=lp.querySelector('.tag'); if(lt) lt.textContent='DC + TOKENIZATION // DAILY';
+    }
+    if(zp && topics.length){
+      var bills=zp.querySelectorAll('.bill');
+      topics.slice(0,bills.length).forEach(function(t,i){
+        var lv=level(t.buzz), b=bills[i];
+        while(b.firstChild) b.removeChild(b.firstChild);
+        var left=el('span'); left.appendChild(el('b',null,t.name)); left.appendChild(el('i',null,t.count+' stories // 3 days'));
+        b.appendChild(left); b.appendChild(el('span','sticker '+lv[1],lv[0]));
+      });
+      var zt=zp.querySelector('.tag'); if(zt) zt.textContent='BILL BUZZ';
+    }
+  }
+  window.addEventListener('hashchange',render);
+  fetch('data/news.json',{cache:'no-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('news'); return r.json(); })
+    .then(function(d){
+      data=d; render();
+      document.dispatchEvent(new CustomEvent('crippin:news',{detail:d}));
+    })
+    .catch(function(){ /* leave the placeholder text in place */ });
 })();

@@ -218,3 +218,11 @@
 /* ---- nav views ---- */
 .board > .p[hidden], .tiles[hidden]{ display:none; }
 .board > .p.wide{ grid-column:span 12; }
+
+/* ---- news + bill buzz ---- */
+.row a{ color:var(--text); text-decoration:none; }
+.row a:hover, .row a:focus-visible{ color:var(--lime); text-decoration:underline; }
+.row .src{ display:block; color:var(--dim); font-size:11px; margin-top:2px; }
+.bar{ height:12px; margin-top:6px; background:#06303f; border:2px solid #021a26; }
+.bar i{ display:block; height:100%; background:var(--blue); font-style:normal; }
+.bill .sticker{ align-self:flex-start; }

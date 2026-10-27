@@ -1,0 +1,24 @@
+name: daily-news
+on:
+  schedule:
+    - cron: "17 14 * * *"   # every day, 14:17 UTC
+  workflow_dispatch:         # also lets you press "Run workflow" by hand
+permissions:
+  contents: write
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build news.json
+        run: python scripts/fetch_news.py
+      - name: Commit if changed
+        run: |
+          git config user.name "GOZAR"
+          git config user.email "331195867+GozarCripp@users.noreply.github.com"
+          git add data/news.json
+          git diff --cached --quiet || git commit -m "Daily news update"
+          git push
