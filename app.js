@@ -34,12 +34,18 @@
      - Rows are built in JS from the config, so the page and the data can't drift apart. */
   var API='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&price_change_percentage=24h,7d&sparkline=true&ids=';
   var REFRESH_MS=60000;
+  /* Backup feed: Kraken's public ticker (free, no key). Used only when CoinGecko fails or rate-limits.
+     It gives price and today's open (since 00:00 UTC), so the % chip is "today" while on backup. */
+  var KRAKEN='https://api.kraken.com/0/public/Ticker?pair=';
+  var STORE='crippin:prices:v1';    // last good prices, kept in this browser only
+  var STALE_MS=5*60000;             // older than this, the price shows its age
+  var CG_PAUSE_MS=5*60000;          // after a CoinGecko failure, rest it this long and use the backup
 
   // launch = year the network went live (a fact, used for the AGE stat)
   var TOKENS=[
-    {id:'ripple',           name:'XRP',  tick:'/XRP',  launch:2012},
-    {id:'hedera-hashgraph', name:'HBAR', tick:'/HBAR', launch:2019},
-    {id:'stellar',          name:'XLM',  tick:'/XLM',  launch:2014}
+    {id:'ripple',           name:'XRP',  tick:'/XRP',  launch:2012, kr:['XRPUSD','XXRPZUSD']},
+    {id:'hedera-hashgraph', name:'HBAR', tick:'/HBAR', launch:2019, kr:['HBARUSD']},
+    {id:'stellar',          name:'XLM',  tick:'/XLM',  launch:2014, kr:['XLMUSD','XXLMZUSD']}
   ];
   // Not vetted. Display-only: no price feed, no click. Reasons are plain, opinion-style labels.
   var DENIED=[
@@ -54,6 +60,7 @@
   function ord(n){ return n+(['th','st','nd','rd'][(n%100>10&&n%100<14)?0:(n%10<4?n%10:0)]); }
   function fmtPrice(p){ return p>=1 ? '$'+p.toFixed(2) : '$'+p.toFixed(4); }
   function fmtPct(p){ return (p>=0?'+':'')+p.toFixed(1)+'%'; }
+  function age(ms){ var m=Math.max(0,ms)/6e4; return m<60?Math.max(1,Math.round(m))+'M':m<1440?Math.round(m/60)+'H':Math.round(m/1440)+'D'; }
 
   /* ---- the ranking algorithm: five 0-100 scores, all subjective, all tweakable ----
      SIZE      market-cap rank on a log scale (#1 = 100, #500 = 0)
@@ -109,7 +116,8 @@
     [40,90,140,190].forEach(function(y){ g.appendChild(node('line',{x1:0,y1:y,x2:760,y2:y})); });
     chartSvg.appendChild(g);
     var pts=t&&t.spark;
-    if(chartTag) chartTag.textContent=(t?t.name:'--')+' // 7 DAY PRICE // '+(pts?'LIVE':'LOADING');
+    var old=t&&t.cgAt&&Date.now()-t.cgAt>STALE_MS;
+    if(chartTag) chartTag.textContent=(t?t.name:'--')+' // 7 DAY PRICE // '+(pts?(old?'SAVED '+age(Date.now()-t.cgAt)+' AGO':'LIVE'):t&&t.quote?'WAITING FOR CHART DATA':'LOADING');
     if(!pts||pts.length<2) return;
     var lo=Math.min.apply(null,pts), hi=Math.max.apply(null,pts), span=(hi-lo)||1;
     var line=pts.map(function(p,i){ return (i?'L':'M')+(i/(pts.length-1)*760).toFixed(1)+','+(210-(p-lo)/span*180).toFixed(1); }).join(' ');
@@ -157,71 +165,159 @@
     drawSpark(t);
   }
 
-  /* ---- fetch + refresh ---- */
-  function apply(arr){
-    arr.forEach(function(d){
-      TOKENS.forEach(function(t){ if(t.id===d.id){ t.data=d; t.scores=scoreOf(d,t); t.spark=(d.sparkline_in_7d&&Array.isArray(d.sparkline_in_7d.price))?d.sparkline_in_7d.price.map(num):null; } });
-    });
+  /* ---- fetch + refresh ----
+     Order: CoinGecko (full stats) -> Kraken (price only) -> last good prices saved in this browser.
+     The page never goes blank once it has seen a price; a stale price shows how old it is. */
+  var feedTag=document.querySelector('.p.tok .tag');
+  function rescore(){
+    TOKENS.forEach(function(t){ if(t.data) t.scores=scoreOf(t.data,t); });
     TOKENS.filter(function(t){return t.scores;})
       .sort(function(a,b){ return avg(b.scores)-avg(a.scores); })
       .forEach(function(t,i){ t.rank=i+1; });
-    TOKENS.forEach(function(t){
-      if(!t.data) return;
-      var ch=num(t.data.price_change_percentage_24h_in_currency);
-      t.sm.textContent=t.tick+' // '+fmtPrice(num(t.data.current_price));
-      t.chip.textContent=fmtPct(ch);
-      t.chip.style.color=ch>=0?'':'#ff6a7a';
-    });
     if(selected) choose(selected);
+  }
+  function showQuotes(){
+    var now=Date.now(), oldest=0, backup=false, n=0;
+    TOKENS.forEach(function(t){
+      var q=t.quote; if(!q) return; n++;
+      var stale=now-q.at>STALE_MS;
+      t.sm.textContent=t.tick+' // '+fmtPrice(q.price)+(stale?' // '+age(now-q.at)+' AGO':'');
+      t.chip.textContent=q.ch==null?'--':fmtPct(q.ch);
+      t.chip.style.color=q.ch==null||q.ch>=0?'':'#ff6a7a';
+      if(stale) oldest=Math.max(oldest,now-q.at);
+      if(q.src==='KRAKEN') backup=true;
+    });
+    if(feedTag) feedTag.textContent='VETTED LIST // '+(!n?'FEED OFFLINE':oldest?'SAVED '+age(oldest)+' AGO':backup?'LIVE // BACKUP FEED':'LIVE');
+  }
+  // CoinGecko rows -> token stats. `at` is when the rows were fetched (now, or the saved time).
+  function apply(arr,at){
+    arr.forEach(function(d){
+      TOKENS.forEach(function(t){
+        if(!d||t.id!==d.id) return;
+        t.data=d; t.cgAt=at;
+        t.spark=(d.sparkline_in_7d&&Array.isArray(d.sparkline_in_7d.price))?d.sparkline_in_7d.price.map(num):null;
+        var price=num(d.current_price);
+        if(price>0&&(!t.quote||at>=t.quote.at)) t.quote={price:price, ch:num(d.price_change_percentage_24h_in_currency), src:'COINGECKO', at:at};
+      });
+    });
+    rescore(); showQuotes();
+  }
+  function save(){
+    try{
+      var cg={}, q={};
+      TOKENS.forEach(function(t){ if(t.data) cg[t.id]={at:t.cgAt,d:t.data}; if(t.quote) q[t.id]=t.quote; });
+      localStorage.setItem(STORE,JSON.stringify({v:1,cg:cg,q:q}));
+    }catch(e){ /* private mode or storage full: live prices still work */ }
+  }
+  function load(){
+    var s=null;
+    try{ s=JSON.parse(localStorage.getItem(STORE)||'null'); }catch(e){ return; }
+    if(!s||s.v!==1||typeof s.cg!=='object'||typeof s.q!=='object') return;
+    TOKENS.forEach(function(t){
+      var c=s.cg&&s.cg[t.id], q=s.q&&s.q[t.id];
+      if(c&&c.d&&typeof c.d==='object'&&num(c.at)>0) apply([c.d],num(c.at));
+      if(q&&num(q.price)>0&&num(q.at)>0&&(!t.quote||num(q.at)>t.quote.at))
+        t.quote={price:num(q.price), ch:q.ch==null?null:num(q.ch), src:q.src==='KRAKEN'?'KRAKEN':'COINGECKO', at:num(q.at)};
+    });
+    showQuotes();
+  }
+  function getJSON(url){
+    var ctl=window.AbortController?new AbortController():null, timer=ctl&&setTimeout(function(){ ctl.abort(); },10000);
+    return fetch(url,{cache:'no-store',signal:ctl?ctl.signal:undefined})
+      .then(function(r){ if(!r.ok) throw new Error('feed '+r.status); return r.json(); })
+      .finally(function(){ clearTimeout(timer); });
+  }
+  function kraken(){
+    return getJSON(KRAKEN+TOKENS.map(function(t){return t.kr[0];}).join(',')).then(function(j){
+      var res=j&&j.result, now=Date.now(), n=0;
+      if(!res||typeof res!=='object') throw new Error('feed');
+      TOKENS.forEach(function(t){
+        var r=null;
+        t.kr.forEach(function(k){ if(!r&&Object.prototype.hasOwnProperty.call(res,k)) r=res[k]; });
+        var price=num(r&&r.c&&r.c[0]), open=num(r&&r.o);
+        if(price>0){ t.quote={price:price, ch:open>0?(price-open)/open*100:null, src:'KRAKEN', at:now}; n++; }
+      });
+      if(!n) throw new Error('feed');
+      showQuotes();
+      if(selected&&!selected.spark) drawSpark(selected);
+    });
+  }
+  var cgPauseUntil=0;
+  function coingecko(){
+    if(Date.now()<cgPauseUntil) return Promise.reject(new Error('resting'));
+    return getJSON(API+TOKENS.map(function(t){return t.id;}).join(',')).then(function(arr){
+      if(!Array.isArray(arr)||!arr.length) throw new Error('feed');
+      apply(arr,Date.now());
+    }).catch(function(e){ cgPauseUntil=Date.now()+CG_PAUSE_MS; throw e; });
   }
   function refresh(){
     if(document.hidden) return;
-    fetch(API+TOKENS.map(function(t){return t.id;}).join(','),{cache:'no-store'})
-      .then(function(r){ if(!r.ok) throw new Error('feed'); return r.json(); })
-      .then(function(arr){ if(!Array.isArray(arr)) throw new Error('feed'); apply(arr); })
+    coingecko()
+      .catch(kraken)
+      .then(save)
       .catch(function(){
-        TOKENS.forEach(function(t){ if(!t.data) t.sm.textContent=t.tick+' // feed offline'; });
+        showQuotes();   // keeps saved prices up, now with their age
+        TOKENS.forEach(function(t){ if(!t.quote) t.sm.textContent=t.tick+' // feed offline'; });
       });
   }
   // news mentions per coin (from the daily news file) feed the BUZZ stat
   document.addEventListener('crippin:news',function(e){
     var c=(e.detail&&e.detail.buzz&&e.detail.buzz.coins)||{};
     TOKENS.forEach(function(t){ t.news=Math.min(num(c[t.name]),10); });
-    var have=TOKENS.filter(function(t){return t.data;});
-    if(have.length) apply(have.map(function(t){return t.data;}));
+    rescore();
   });
   document.getElementById('statTok').textContent=('00'+TOKENS.length).slice(-3);
   choose(TOKENS[0]);
+  load();
   refresh();
   setInterval(refresh,REFRESH_MS);
 })();
+/* ---- header boxes: pixel dissolve ----
+   Each header's mask is built once per size (seeded, so it looks the same every time) and
+   then reused, so a resize or tab switch only looks the mask up instead of redrawing it. Columns are rounded to steps of 4 so small width changes reuse the same mask
+   (it stretches a few pixels, which you can't see). Small screens and reduced-motion get no
+   drifting pixels, just the static dissolve. */
 (function(){
-  var heads=[].slice.call(document.querySelectorAll('.ph')), cell=6;
-  function maskFor(el){
-    var w=el.offsetWidth, h=el.offsetHeight, cols=Math.ceil(w/cell), rows=Math.ceil(h/cell), d='';
+  var heads=[].slice.call(document.querySelectorAll('.ph')), cell=6, cache={};
+  var mq=window.matchMedia?function(q){ return window.matchMedia(q).matches; }:function(){ return false; };
+  var lite=mq('(max-width:700px)')||mq('(prefers-reduced-motion: reduce)');
+  function rng(seed){ return function(){ seed=(seed*1664525+1013904223)>>>0; return seed/4294967296; }; }
+  function maskFor(n,cols,rows){
+    var key=n+':'+cols+'x'+rows; if(cache[key]) return cache[key];
+    var rand=rng(n*7919+cols*131+rows*7+1), w=cols*cell, h=rows*cell, d='';
     for(var c=0;c<cols;c++){
       var t=c/cols, p=t<0.45?1:Math.max(0,1-(t-0.45)/0.55); p=Math.pow(p,1.2);
-      for(var r=0;r<rows;r++){ if(Math.random()<p){ d+='M'+(c*cell)+' '+(r*cell)+'h'+cell+'v'+cell+'h-'+cell+'z'; } }
+      for(var r=0;r<rows;r++){ if(rand()<p){ d+='M'+(c*cell)+' '+(r*cell)+'h'+cell+'v'+cell+'h-'+cell+'z'; } }
     }
-    var svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+w+"' height='"+h+"' shape-rendering='crispEdges'><path d='"+d+"' fill='#000'/></svg>";
-    return 'url("data:image/svg+xml;utf8,'+encodeURIComponent(svg)+'")';
+    var svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+w+"' height='"+h+"' viewBox='0 0 "+w+" "+h+"' preserveAspectRatio='none' shape-rendering='crispEdges'><path d='"+d+"' fill='#000'/></svg>";
+    return (cache[key]='url("data:image/svg+xml;utf8,'+encodeURIComponent(svg)+'")');
   }
-  function build(){ heads.forEach(function(el){ var bg=el.querySelector('.phbg'); var m=maskFor(el); bg.style.webkitMaskImage=m; bg.style.maskImage=m; }); }
+  function build(){
+    heads.forEach(function(el,n){
+      var w=el.offsetWidth, h=el.offsetHeight; if(!w||!h) return;          // hidden tab: keep the old mask
+      var cols=Math.max(4,Math.round(w/cell/4)*4), rows=Math.ceil(h/cell), key=cols+'x'+rows;
+      if(el._mk===key) return;
+      var bg=el._bg, m=maskFor(n,cols,rows); bg.style.webkitMaskImage=m; bg.style.maskImage=m; el._mk=key;
+    });
+  }
   heads.forEach(function(el){
-    var bg=document.createElement('div'); bg.className='phbg';
-    var pw=document.createElement('div'); pw.className='pixwrap';
-    for(var i=0;i<16;i++){
-      var p=document.createElement('i'), s=3+Math.floor(Math.random()*3)*2;
-      p.className='pix';
-      p.style.cssText='left:'+(40+Math.random()*58)+'%;top:'+(Math.random()*80)+'%;width:'+s+'px;height:'+s+'px;--dx:'+(20+Math.random()*60)+'px;--dy:'+(-18+Math.random()*30)+'px;--d:'+(2+Math.random()*3)+'s;animation-delay:-'+(Math.random()*4)+'s';
-      pw.appendChild(p);
+    var bg=document.createElement('div'); bg.className='phbg'; el._bg=bg;
+    if(!lite){
+      var pw=document.createElement('div'); pw.className='pixwrap';
+      for(var i=0;i<16;i++){
+        var p=document.createElement('i'), s=3+Math.floor(Math.random()*3)*2;
+        p.className='pix';
+        p.style.cssText='left:'+(40+Math.random()*58)+'%;top:'+(Math.random()*80)+'%;width:'+s+'px;height:'+s+'px;--dx:'+(20+Math.random()*60)+'px;--dy:'+(-18+Math.random()*30)+'px;--d:'+(2+Math.random()*3)+'s;animation-delay:-'+(Math.random()*4)+'s';
+        pw.appendChild(p);
+      }
+      el.insertBefore(pw, el.firstChild);
     }
-    el.insertBefore(pw, el.firstChild); el.insertBefore(bg, el.firstChild);
+    el.insertBefore(bg, el.firstChild);
   });
   build();
   if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(build); }
   window.addEventListener('load', build);
-  var t; window.addEventListener('resize', function(){ clearTimeout(t); t=setTimeout(build,200); });
+  var t; window.addEventListener('resize', function(){ clearTimeout(t); t=setTimeout(build,150); });
 })();
 
 /* ---- working nav: each tab shows its own panels; the URL hash remembers the tab ---- */

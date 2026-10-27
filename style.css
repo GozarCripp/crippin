@@ -226,3 +226,14 @@
 .bar{ height:12px; margin-top:6px; background:#06303f; border:2px solid #021a26; }
 .bar i{ display:block; height:100%; background:var(--blue); font-style:normal; }
 .bill .sticker{ align-self:flex-start; }
+
+/* ---- light mode for phones and reduced motion ----
+   The full-screen scanline + grain layer, the fixed background and the glowing radar filter
+   repaint constantly and cost phones battery. Desktop keeps the full look. */
+@media (max-width:700px), (prefers-reduced-motion: reduce){
+  body::before{ display:none; }
+  body{ background-attachment:scroll; }
+  .bf{ filter:none; }
+  #radarPoly{ filter:none; animation:none; }
+  .pixwrap{ display:none; }
+}
