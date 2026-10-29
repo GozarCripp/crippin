@@ -290,22 +290,51 @@
   }
   function level(b){ return b>=60?['HOT','k']:b>=30?['WARM','y']:['CALM','b']; }
 
-  var data=null;
+  /* real bill status from data/bills.json (Congress.gov, written once a day by the bills Action) */
+  var BSTICK={'LAW':'g','TO PRESIDENT':'b','PASSED BOTH':'b','PASSED HOUSE':'y','PASSED SENATE':'y',
+              'REPORTED':'y','COMMITTEE':'k','INTRODUCED':'k','VETOED':'k'};
+  function billRow(b){
+    var r=el('div','bill'), left=el('span'), sp=(b.sponsors||[])[0];
+    var a=el('a',null,b.name+' // '+b.id); a.href=/^https:\/\/www\.congress\.gov\//i.test(b.url)?b.url:'#';
+    a.target='_blank'; a.rel='noopener noreferrer nofollow';
+    var head=el('b'); head.appendChild(a); left.appendChild(head);
+    if(sp) left.appendChild(el('i',null,'SPONSOR '+sp.name+((b.cosponsors|0)?' + '+(b.cosponsors|0)+' COSPONSORS':'')));
+    if(b.latest&&b.latest.text) left.appendChild(el('i',null,(b.latest.date||'')+' // '+b.latest.text));
+    if(b.law) left.appendChild(el('i',null,b.law));
+    if(b.stale) left.appendChild(el('i',null,'CONGRESS.GOV UNREACHABLE // SHOWING LAST GOOD DATA'));
+    var bar=el('div','bar'), fillb=el('i'); fillb.style.width=Math.max(4,Math.min(100,b.progress|0))+'%';
+    bar.appendChild(fillb); left.appendChild(bar);
+    r.appendChild(left); r.appendChild(el('span','sticker '+(BSTICK[b.stage]||'y'),String(b.stage||'')));
+    return r;
+  }
+
+  var data=null, bills=null;
   function render(){
-    if(!data) return;
+    if(!data && !bills) return;
     var wide=location.hash==='#stories';
+    var billList=(bills&&bills.bills)||[];
+    var stat=[].slice.call(document.querySelectorAll('.stat')).filter(function(p){
+      var k=p.querySelector('.k1'); return k&&k.textContent.trim()==='BILLS WATCHED'; })[0];
+    if(billList.length && stat){
+      var v=stat.querySelector('.v'), d=stat.querySelector('.d');
+      if(v) v.textContent=('00'+billList.length).slice(-3);
+      if(d) d.textContent='congress.gov // daily';
+    }
+    var news=data||{};
     var np=panel('NEWS STORIES'), lp=panel('LEGISLATION'), zp=panel('ZONE LOAD');
-    var stamp=data.updated?('UPDATED '+data.updated.slice(0,10)+' // HEADLINES LINK TO SOURCES'):'FIRST UPDATE PENDING';
-    if(np){
+    var stamp=news.updated?('UPDATED '+news.updated.slice(0,10)+' // HEADLINES LINK TO SOURCES'):'FIRST UPDATE PENDING';
+    if(np && data){
       var rows=(data.stories||[]).slice(0,wide?12:5).map(function(s){ return storyRow(s,STICK[s.tag]||'y'); });
       var box=np.querySelector('.pb');
       fill(box,rows,'NEWS UPDATES DAILY // FIRST RUN PENDING');
       box.appendChild(el('div','row',stamp));
       var tag=np.querySelector('.tag'); if(tag) tag.textContent='FEED // DAILY';
     }
-    var topics=(data.buzz&&data.buzz.topics)||[];
+    var topics=(news.buzz&&news.buzz.topics)||[];
     if(lp){
       var lb=lp.querySelector('.pb'); while(lb.firstChild) lb.removeChild(lb.firstChild);
+      billList.forEach(function(b){ lb.appendChild(billRow(b)); });
+      if(billList.length) lb.appendChild(el('div','row','BILL STATUS FROM CONGRESS.GOV // UPDATED '+String(bills.updated||'').slice(0,10)));
       topics.forEach(function(t){
         var lv=level(t.buzz), r=el('div','bill'), left=el('span');
         left.appendChild(el('b',null,t.name)); left.appendChild(el('i',null,t.count+' stories // last 3 days'));
@@ -313,14 +342,14 @@
         left.appendChild(bar);
         r.appendChild(left); r.appendChild(el('span','sticker '+lv[1],lv[0]+' '+t.buzz)); lb.appendChild(r);
       });
-      (data.legislation||[]).slice(0,wide?8:5).forEach(function(s,i){ lb.appendChild(storyRow(s,LSTICK[i%4])); });
-      if(!topics.length) lb.appendChild(el('div','row','BILL + TOKENIZATION BUZZ UPDATES DAILY // FIRST RUN PENDING'));
+      (news.legislation||[]).slice(0,wide?8:5).forEach(function(s,i){ lb.appendChild(storyRow(s,LSTICK[i%4])); });
+      if(!topics.length && !billList.length) lb.appendChild(el('div','row','BILL + TOKENIZATION BUZZ UPDATES DAILY // FIRST RUN PENDING'));
       var lt=lp.querySelector('.tag'); if(lt) lt.textContent='DC + TOKENIZATION // DAILY';
     }
     if(zp && topics.length){
-      var bills=zp.querySelectorAll('.bill');
-      topics.slice(0,bills.length).forEach(function(t,i){
-        var lv=level(t.buzz), b=bills[i];
+      var zb=zp.querySelectorAll('.bill');
+      topics.slice(0,zb.length).forEach(function(t,i){
+        var lv=level(t.buzz), b=zb[i];
         while(b.firstChild) b.removeChild(b.firstChild);
         var left=el('span'); left.appendChild(el('b',null,t.name)); left.appendChild(el('i',null,t.count+' stories // 3 days'));
         b.appendChild(left); b.appendChild(el('span','sticker '+lv[1],lv[0]));
@@ -336,4 +365,8 @@
       document.dispatchEvent(new CustomEvent('crippin:news',{detail:d}));
     })
     .catch(function(){ /* leave the placeholder text in place */ });
+  fetch('data/bills.json',{cache:'no-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('bills'); return r.json(); })
+    .then(function(d){ bills=d; render(); })
+    .catch(function(){ /* no bill file yet (or offline): keep the buzz view */ });
 })();
