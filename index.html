@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <title>CRIPPIN // CONSOLE</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.coingecko.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.coingecko.com https://api.kraken.com; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="description" content="CRIPPIN: a retro console for learning about crypto tokens. Live prices, plain-language ratings.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/press-start-2p-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -183,7 +183,7 @@
     <div class="tile"><span class="n">MODULE-06</span><span class="x">GLOSSARY</span><span class="s">EMPTY SLOT</span></div>
   </div>
 
-  <div class="foot"><footer>CRIPPIN ARCHIVE // PRICES: COINGECKO // NOT FINANCIAL ADVICE // EMPTY SLOTS ARE PLACEHOLDERS</footer></div>
+  <div class="foot"><footer>CRIPPIN ARCHIVE // PRICES: COINGECKO (BACKUP: KRAKEN) // NOT FINANCIAL ADVICE // EMPTY SLOTS ARE PLACEHOLDERS</footer></div>
 </div>
 
 <script src="app.js"></script>
