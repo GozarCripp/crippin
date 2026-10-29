@@ -1,0 +1,32 @@
+name: daily-bills
+on:
+  schedule:
+    - cron: "41 15 * * *"   # every day, 15:41 UTC (an hour after the news job)
+  workflow_dispatch:         # also lets you press "Run workflow" by hand
+permissions:
+  contents: write
+concurrency:
+  group: daily-bills
+jobs:
+  bills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build bills.json
+        # The key lives only in the repo's Actions secrets. It is passed to this one step
+        # and sent to Congress.gov in a header; it is never written to the repo or the page.
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
+        run: python scripts/fetch_bills.py
+      - name: Commit if changed
+        run: |
+          git config user.name "GOZAR"
+          git config user.email "331195867+GozarCripp@users.noreply.github.com"
+          git add data/bills.json 2>/dev/null || exit 0
+          git diff --cached --quiet && exit 0
+          git commit -m "Daily bill status update"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push
