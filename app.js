@@ -231,7 +231,7 @@
     tokens:['SELECT TOKEN','SIGNAL ACTIVITY'],
     stories:['NEWS STORIES'],
     evidence:['EVIDENCE'],
-    legislation:['LEGISLATION','ZONE LOAD'],
+    legislation:['LEGISLATION','ZONE LOAD','BILL TRACKER','TOKENIZATION'],
     lore:['THE LITTLE MAN RISES']
   };
   var links=[].slice.call(document.querySelectorAll('.nav a')),
@@ -336,4 +336,56 @@
       document.dispatchEvent(new CustomEvent('crippin:news',{detail:d}));
     })
     .catch(function(){ /* leave the placeholder text in place */ });
+})();
+
+/* ---- bills, rules and tokenization stats: reads data/gov.json (written daily by the Action) ---- */
+(function(){
+  function el(tag,cls,text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  function clear(n){ while(n.firstChild) n.removeChild(n.firstChild); }
+  function link(text,url){ var a=el('a',null,text); a.href=/^https:\/\//i.test(url||'')?url:'#'; a.target='_blank'; a.rel='noopener noreferrer nofollow'; return a; }
+  function money(n){ n=Number(n); if(!isFinite(n)) return '--'; return n>=1e9?'$'+(n/1e9).toFixed(2)+'B':n>=1e6?'$'+(n/1e6).toFixed(1)+'M':'$'+Math.round(n).toLocaleString('en-US'); }
+  function pct(p){ p=Number(p); return isFinite(p)?(p>=0?'+':'')+p.toFixed(1)+'%':'--'; }
+  var STAGE={LAW:'g',PASSED:'b',COMMITTEE:'y',ACTIVE:'k'};
+
+  function bills(d){
+    var box=document.getElementById('billBox'); if(!box) return;
+    var list=d.bills||[], rules=d.rules||[];
+    if(!list.length&&!rules.length) return;
+    clear(box);
+    list.forEach(function(b){
+      var r=el('div','bill'), left=el('span'), t=el('b'); t.appendChild(link(b.id+' // '+b.title,b.url));
+      left.appendChild(t);
+      left.appendChild(el('i',null,'SPONSOR: '+(b.sponsor||'--')+' // INTRODUCED '+(b.introduced||'--')));
+      left.appendChild(el('i',null,(b.action_date||'')+' '+(b.action||'')));
+      r.appendChild(left); r.appendChild(el('span','sticker '+(STAGE[b.stage]||'y'),b.stage||'')); box.appendChild(r);
+    });
+    if(rules.length){
+      box.appendChild(el('div','row','NEW FEDERAL RULES + NOTICES'));
+      rules.forEach(function(x){
+        var row=el('div','row'), body=el('span');
+        row.appendChild(el('span','t',(x.date||'').slice(5)));
+        row.appendChild(el('span','sticker b',String(x.type||'DOC').toUpperCase().slice(0,8)));
+        body.appendChild(link(x.title,x.url)); body.appendChild(el('span','src',x.agency)); row.appendChild(body); box.appendChild(row);
+      });
+    }
+    box.appendChild(el('div','row','UPDATED '+(d.updated||'').slice(0,10)+' // FACTS FROM OFFICIAL SOURCES, LINKED'));
+  }
+  function rwa(d){
+    var box=document.getElementById('rwaBox'), r=d.rwa; if(!box||!r||!r.top||!r.top.length) return;
+    clear(box);
+    var head=el('div','bill'), hl=el('span');
+    hl.appendChild(el('b',null,'TOTAL LOCKED '+money(r.total)));
+    hl.appendChild(el('i',null,r.count+' real-world-asset protocols'));
+    head.appendChild(hl); box.appendChild(head);
+    r.top.forEach(function(p){
+      var row=el('div','bill'), left=el('span'), b=el('b'); b.appendChild(link(p.name,p.url));
+      left.appendChild(b); left.appendChild(el('i',null,money(p.tvl)+' // 1d '+pct(p.d1)));
+      var up=Number(p.d7)>=0; row.appendChild(left); row.appendChild(el('span','sticker '+(up?'g':'k'),'7D '+pct(p.d7)));
+      box.appendChild(row);
+    });
+  }
+  fetch('data/gov.json',{cache:'no-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('gov'); return r.json(); })
+    .then(function(d){ bills(d); rwa(d); })
+    .catch(function(){ /* leave placeholders */ });
 })();
