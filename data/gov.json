@@ -1,1 +1,124 @@
-{"updated":null,"bills":[],"rules":[],"rwa":{"total":null,"count":0,"top":[]}}
+{
+ "updated": "2026-10-30T22:25:42Z",
+ "bills": [],
+ "rules": [
+  {
+   "title": "Medicare Program; CY 2027 Changes to the End-Stage Renal Disease (ESRD) Prospective Payment System, Acute Kidney Injury (AKI) Dialysis Payment, and E…",
+   "agency": "Health and Human Services Department",
+   "type": "Rule",
+   "date": "2026-10-30",
+   "url": "https://www.federalregister.gov/documents/2026/10/30/2026-22194/medicare-program-cy-2027-changes-to-the-end-stage-renal-disease-esrd-prospective-payment-system"
+  },
+  {
+   "title": "Additional Reconsideration Standards of Performance for New, Reconstructed, and Modified Sources and Emissions Guidelines for Existing Sources: Oil a…",
+   "agency": "Environmental Protection Agency",
+   "type": "Proposed Rule",
+   "date": "2026-10-29",
+   "url": "https://www.federalregister.gov/documents/2026/10/29/2026-22082/additional-reconsideration-standards-of-performance-for-new-reconstructed-and-modified-sources-and"
+  },
+  {
+   "title": "Agency Information Collection Activities: Proposed Information Collection; Submission for OMB Review; Applications for Licensing or Registration To I…",
+   "agency": "Treasury Department",
+   "type": "Notice",
+   "date": "2026-10-29",
+   "url": "https://www.federalregister.gov/documents/2026/10/29/2026-22036/agency-information-collection-activities-proposed-information-collection-submission-for-omb-review"
+  },
+  {
+   "title": "NCUA Draft 2027-2028 Budget",
+   "agency": "National Credit Union Administration",
+   "type": "Notice",
+   "date": "2026-10-28",
+   "url": "https://www.federalregister.gov/documents/2026/10/28/2026-21948/ncua-draft-2027-2028-budget"
+  },
+  {
+   "title": "Establishment of Federal Advisory Committees-Advisory Council on Health and Human Performance Optimization",
+   "agency": "Defense Department",
+   "type": "Notice",
+   "date": "2026-10-27",
+   "url": "https://www.federalregister.gov/documents/2026/10/27/2026-21900/establishment-of-federal-advisory-committees-advisory-council-on-health-and-human-performance"
+  },
+  {
+   "title": "Notice of Regulatory Waiver Requests Granted for the First Quarter of Calendar Year 2026",
+   "agency": "Housing and Urban Development Department",
+   "type": "Notice",
+   "date": "2026-10-27",
+   "url": "https://www.federalregister.gov/documents/2026/10/27/2026-21886/notice-of-regulatory-waiver-requests-granted-for-the-first-quarter-of-calendar-year-2026"
+  },
+  {
+   "title": "Cboe Clear U.S., LLC; Order Granting an Application, as Amended, for Temporary Registration as a Clearing Agency Under Section 17A of the Securities…",
+   "agency": "Securities and Exchange Commission",
+   "type": "Notice",
+   "date": "2026-10-27",
+   "url": "https://www.federalregister.gov/documents/2026/10/27/2026-21845/cboe-clear-us-llc-order-granting-an-application-as-amended-for-temporary-registration-as-a-clearing"
+  },
+  {
+   "title": "Outbound Investment Security Program Regulations",
+   "agency": "Treasury Department",
+   "type": "Proposed Rule",
+   "date": "2026-10-26",
+   "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21786/outbound-investment-security-program-regulations"
+  }
+ ],
+ "rwa": {
+  "total": 3946110595,
+  "count": 119,
+  "top": [
+   {
+    "name": "Ethena USDtb",
+    "tvl": 484365693,
+    "d1": 2.103889582616091,
+    "d7": 1.5551157644334381,
+    "url": "https://defillama.com/protocol/ethena-usdtb"
+   },
+   {
+    "name": "Re",
+    "tvl": 477027962,
+    "d1": 0.6011556181349818,
+    "d7": 3.4672525902781786,
+    "url": "https://defillama.com/protocol/re"
+   },
+   {
+    "name": "Huma",
+    "tvl": 377849148,
+    "d1": 2.404162047752422,
+    "d7": 0.6308950134086757,
+    "url": "https://defillama.com/protocol/huma"
+   },
+   {
+    "name": "OnRe",
+    "tvl": 307473670,
+    "d1": 0.7772834590851829,
+    "d7": 4.153431647775747,
+    "url": "https://defillama.com/protocol/onre"
+   },
+   {
+    "name": "USD AI",
+    "tvl": 274322951,
+    "d1": 1.7354785986111665,
+    "d7": 4.917836135432907,
+    "url": "https://defillama.com/protocol/usd-ai"
+   },
+   {
+    "name": "OpenTrade",
+    "tvl": 246560185,
+    "d1": 0.1499513191002535,
+    "d7": 0.3179930431473963,
+    "url": "https://defillama.com/protocol/opentrade"
+   },
+   {
+    "name": "Plume Vaults",
+    "tvl": 231032484,
+    "d1": -1.2120632148043597,
+    "d7": 1.3031021777920984,
+    "url": "https://defillama.com/protocol/plume-vaults"
+   },
+   {
+    "name": "R25",
+    "tvl": 196517895,
+    "d1": -0.18153608338464267,
+    "d7": 9.213009721672279,
+    "url": "https://defillama.com/protocol/r25"
+   }
+  ]
+ }
+}
