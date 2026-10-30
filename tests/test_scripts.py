@@ -50,7 +50,10 @@ class Gov(unittest.TestCase):
                 "latestAction": {"actionDate": "2025-02-02", "text": "Referred to the Committee."}}}).encode()
         if "federalregister" in url:
             return json.dumps({"results": [{"title": "Rule", "html_url": "https://fr.gov/1",
-                "type": "Rule", "publication_date": "2026-10-01", "agencies": [{"name": "SEC"}]},
+                "type": "Rule", "publication_date": "2026-10-01", "agencies": [{"name": "SEC"}],
+                 "abstract": "Rules for stablecoin issuers."},
+                {"title": "Medicare payment rule", "html_url": "https://fr.gov/3", "type": "Rule",
+                 "publication_date": "2026-10-02", "agencies": [{"name": "CMS"}], "abstract": "Hospital payments."},
                 {"title": "Bad", "html_url": "http://fr.gov/2"}]}).encode()
         return json.dumps([{"name": "A", "category": "RWA", "tvl": 5e9, "change_1d": 1, "change_7d": 2, "slug": "a"},
                            {"name": "B", "category": "DEX", "tvl": 9e9}]).encode()
@@ -62,7 +65,7 @@ class Gov(unittest.TestCase):
         self.assertEqual(fg.main(p), 0)
         d = json.load(open(p))
         self.assertEqual(d["bills"][0]["stage"], "COMMITTEE")
-        self.assertEqual(len(d["rules"]), 1)                      # http link dropped
+        self.assertEqual(len(d["rules"]), 1)                      # http link + off-topic rule dropped
         self.assertEqual(d["rwa"]["total"], 5_000_000_000)        # only RWA category counted
 
     def test_no_key_skips_bills_but_runs_rest(self):

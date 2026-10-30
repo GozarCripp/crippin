@@ -10,6 +10,7 @@ Standard library only. The key goes in a request header and is never printed or 
 """
 import json
 import os
+import re
 import sys
 import urllib.parse
 import urllib.request
@@ -24,7 +25,8 @@ NOW = datetime.now(timezone.utc)
 CONGRESS = 119                       # 119th Congress (2025-2026)
 BILLS = [("hr", "3633"), ("s", "1582")]   # (type, number). The page shows the real title the API
                                           # returns, so a wrong number is easy to spot.
-FR_TERMS = ["cryptocurrency", "digital asset", "stablecoin"]
+FR_TERMS = ["cryptocurrency", '"digital asset"', "stablecoin", "blockchain"]
+FR_KEEP = re.compile(r"crypto|digital asset|stablecoin|blockchain|virtual currenc|tokeniz", re.I)
 FR_DAYS, FR_MAX = 120, 8
 RWA_TOP = 8
 # ---------------------------------------------------------------------------------------
@@ -61,7 +63,8 @@ def bills(key):
                         {"X-Api-Key": key})
             b = json.loads(raw)["bill"]
         except Exception as exc:                  # never include the URL/headers in logs
-            print(f"bill {typ} {num} failed: {type(exc).__name__}", file=sys.stderr)
+            code = getattr(exc, "code", "")      # e.g. 403 = bad key, 404 = wrong bill number
+            print(f"bill {typ} {num} failed: {type(exc).__name__} {code}".strip(), file=sys.stderr)
             continue
         latest = b.get("latestAction") or {}
         spon = (b.get("sponsors") or [{}])[0]
@@ -88,7 +91,7 @@ def rules():
             ("conditions[term]", term), ("conditions[publication_date][gte]", since),
             ("order", "newest"), ("per_page", "8"),
             ("fields[]", "title"), ("fields[]", "html_url"), ("fields[]", "type"),
-            ("fields[]", "publication_date"), ("fields[]", "agencies")])
+            ("fields[]", "publication_date"), ("fields[]", "agencies"), ("fields[]", "abstract")])
         try:
             res = json.loads(fetch("https://www.federalregister.gov/api/v1/documents.json?" + q))
         except Exception as exc:
@@ -97,6 +100,9 @@ def rules():
         for d in res.get("results", []):
             url = d.get("html_url") or ""
             if not url.startswith("https://") or url in seen:
+                continue
+            # the API matches full text, so keep only rules that are actually about crypto
+            if not FR_KEEP.search((d.get("title") or "") + " " + (d.get("abstract") or "")):
                 continue
             seen.add(url)
             ag = (d.get("agencies") or [{}])[0].get("name") or "Federal Register"
@@ -131,6 +137,8 @@ def main(out=OUT):
     key = os.environ.get("CONGRESS_API_KEY", "").strip()
     if key:
         got = bills(key)
+        if not got:
+            print("CONGRESS_API_KEY is set but no bills came back (see errors above)", file=sys.stderr)
         if got:
             data["bills"], ok = got, ok + 1
     else:
