@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T15:32:44Z",
+ "updated": "2026-10-31T18:35:40Z",
  "bills": [
   {
    "id": "H.R. 3633",
@@ -8,7 +8,10 @@
    "introduced": "2025-05-29",
    "action": "Motion by Senator Tillis to reconsider the vote by which cloture on the motion to proceed to the measure was not invoked (Record Vote No. 234) entered in Senate.",
    "action_date": "2026-09-15",
-   "stage": "ACTIVE",
+   "stage": "PASSED HOUSE",
+   "ball": "SENATE",
+   "house_passed": "2025-07-17",
+   "senate_passed": null,
    "url": "https://www.congress.gov/bill/119th-congress/house-bill/3633"
   },
   {
@@ -19,6 +22,9 @@
    "action": "Became Public Law No: 119-27.",
    "action_date": "2025-07-18",
    "stage": "LAW",
+   "ball": "DONE",
+   "house_passed": null,
+   "senate_passed": null,
    "url": "https://www.congress.gov/bill/119th-congress/senate-bill/1582"
   }
  ],
@@ -81,63 +87,63 @@
   }
  ],
  "rwa": {
-  "total": 3951292158,
+  "total": 3937769141,
   "count": 119,
   "top": [
    {
     "name": "Ethena USDtb",
-    "tvl": 484381331,
-    "d1": 0.0019732573303059553,
-    "d7": 1.5770109739322749,
+    "tvl": 484437853,
+    "d1": 0.012288791392677467,
+    "d7": 1.5882273619430123,
     "url": "https://defillama.com/protocol/ethena-usdtb"
    },
    {
     "name": "Re",
-    "tvl": 478933477,
-    "d1": 0.2840056244500744,
-    "d7": 3.199060504810447,
+    "tvl": 479074761,
+    "d1": 0.3104875259208484,
+    "d7": 3.2176679999350313,
     "url": "https://defillama.com/protocol/re"
    },
    {
     "name": "Huma",
-    "tvl": 381515714,
-    "d1": 0.1357157047831663,
-    "d7": 1.605224786222422,
+    "tvl": 367475221,
+    "d1": -3.9259618352077723,
+    "d7": -2.143926696463396,
     "url": "https://defillama.com/protocol/huma"
    },
    {
     "name": "OnRe",
-    "tvl": 307649358,
-    "d1": 1.1078615934687122,
-    "d7": 4.148659286036292,
+    "tvl": 307670184,
+    "d1": 0.0479647636343401,
+    "d7": 4.150445230490689,
     "url": "https://defillama.com/protocol/onre"
    },
    {
     "name": "USD AI",
-    "tvl": 274278342,
-    "d1": 0.5968269944782918,
-    "d7": 4.889584080981237,
+    "tvl": 274336569,
+    "d1": 0.6555679366221341,
+    "d7": 4.904859941931733,
     "url": "https://defillama.com/protocol/usd-ai"
    },
    {
     "name": "OpenTrade",
-    "tvl": 246635973,
-    "d1": 0.15470821834269088,
-    "d7": 0.3352679290507439,
+    "tvl": 246666287,
+    "d1": 0.18788041336337358,
+    "d7": 0.3465963512474133,
     "url": "https://defillama.com/protocol/opentrade"
    },
    {
     "name": "Plume Vaults",
-    "tvl": 228872934,
-    "d1": -1.88455230658559,
-    "d7": -0.11286119897246749,
+    "tvl": 228790199,
+    "d1": -1.2841520285773953,
+    "d7": -0.2470178669511114,
     "url": "https://defillama.com/protocol/plume-vaults"
    },
    {
     "name": "R25",
-    "tvl": 196421352,
-    "d1": -0.038649489024763284,
-    "d7": 7.71029084475478,
+    "tvl": 196450354,
+    "d1": -0.04737617977956177,
+    "d7": 6.410547912260142,
     "url": "https://defillama.com/protocol/r25"
    }
   ]

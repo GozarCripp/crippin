@@ -1,46 +1,53 @@
 {
- "updated": "2026-10-31T15:32:40Z",
+ "updated": "2026-10-31T18:35:35Z",
  "stories": [
+  {
+   "title": "XRP price at Oct 31, 2026 at 3pm EDT Crypto Prediction Market",
+   "source": "Robinhood",
+   "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNMl9HUTVSTHFVdHhPemU3UFZ1d1lVQ2R0RGxaYXc0WHk5eXdvM1NDRU4zcjZBRzVOVklQaG1lOGlOQklrRW1mX1pMR0U1ZkJmZDc0cEtoVnpMRkhyelhlX1RDcUpaTUdMMUFkZkxCVUYzS2JuYU5Fc1A3ZWUzcTI4RDQ4djBIZWhzemhPNVYwQmlMWmlzUmlFb2tFR1c1aXVtX1ZJNFlyaWM0dU9Hd3c?oc=5",
+   "published": "2026-10-31T18:05:28Z",
+   "tag": "XRP"
+  },
+  {
+   "title": "Algorand ALGO Slides Near USD 0.10 as Quantum Security Plans Advance",
+   "source": "Analytics Insight",
+   "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNd3NSbElYcldvZERpSGYySWd4WGVldEo3UXlfa3NxSmdJeVlVTFpLc091MDdua296emtFWFR1OVMydnRkMDF0cjF0YzY0V0VpUzRKZllTWHFRa3ZON3IwX2FYT3BvNmdvVXUxZFJXbWZXTFNEWkltUkZnRTc2ZGY2WDNkZ0h0eE5NUGRuN1FiaGY0M24xRkN5U2twcV8xU2VoLUtfdzktYnTSAbYBQVVfeXFMT2QyempIVjhETXVhbUd4TzVQVjduOG5NNHpzbGFldjZiclBqOVBnbFV0RWk5bHhobU5NcGxtSi1ybzNybWprcF9nMzVkU25abmQ5R2o0aFFpSUpZUUdDUmVPSFBseDJPcmpCUEU2X01tYlBQQm4xZWVtWk5FQTRJT0JJRFhVWmJNZ1Q4T3IxODlHdTh0YVlVd0NFNkJyXzVEcU1FdTVHd3pIcjF3ckRoajFnZF9BN1E?oc=5",
+   "published": "2026-10-31T18:00:00Z",
+   "tag": "ALGO"
+  },
+  {
+   "title": "Stellar USDT0 Volume Surpasses $500M As XLM Price Eyes Key Breakout",
+   "source": "TronWeekly",
+   "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5UVDJDUGVhR0h1aXhDc1ZGbTlTTnNXRWdwUHRQSkpFc1g0Q20xSTlnMXJBUHRvSFdkSzdGaWhUTWx3NGNfSGI0NlBjaEQ0Rk5xa3NxX1ZsUGN3SjRGY3NzUjFqSWsySDRSa1FVc0ZsVVl5TWdKWXdzbFlB?oc=5",
+   "published": "2026-10-31T17:30:00Z",
+   "tag": "XLM"
+  },
+  {
+   "title": "Binance says it has replaced 90% of $6.3 billion stolen in record crypto hack",
+   "source": "Investing.com",
+   "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOOElsc0htQjdkOFhqSnZvTmgtOFN0S0pzMkI5dndfeTNxbGJYWVZHYy1pX2ZZa3RrSjRDckRSYXUzOFM1cURZSWdrQ2EzaG5UaXFtdEZPX2ZfWWV2Yjk0Si1PcFl5ellzTHFnaUhMcTVrU05fZ1A2bkd6VFFRZjRsQTY2Q1ZfQ3ZJWEpuS3dNR1dmVzcxakR2Q2VrX3NtaEI2RkQyamZ2eFRlZUFHMjRSSFpKVWFfaGdmVmhZcWxzWXdsQjAxa3NFMGtsUTJTQQ?oc=5",
+   "published": "2026-10-31T16:58:50Z",
+   "tag": "CRYPTO"
+  },
+  {
+   "title": "Binance restores 90% of stolen crypto assets (BTC-USD:Cryptocurrency)",
+   "source": "Seeking Alpha",
+   "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOQ2ptNVVyZkFpY0E0MXdQYU5Dcm9xX2NMZG1OSk55WTVtMjZWTlVjSHZlRlFtSWsxUjhqV3FydmNmTEJZTzJfdE9nRHFVQmE0LTFrcGpFWUItQ01vWXBGbVBNZVRpNzRSX1BPTDI0bzYtUXY0NFFUcHZhdjZqNEg0emFfWnZHVFN2Q2k1TjFlYw?oc=5",
+   "published": "2026-10-31T16:11:19Z",
+   "tag": "CRYPTO"
+  },
+  {
+   "title": "How a stolen iPhone in London led to drained crypto wallets and $14,000 in losses",
+   "source": "CoinDesk",
+   "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOWWtXcU50RXNlOTJjUGthVDRDRUNiZXExLThOcXlvZC1DSExOZV96bDdxRW1BWkhOZE1kTldsSEU3dFRoNVlncVJXQWxSVjEzN1pBTHJxVzNMTDZQa1BFc21CZjdDTlllemdGZmVRN3ZpdWRXd1Q0QlloVDJaYjdvUExNMlFHeEhfSlZQZ0x6NnVqU1YtZGtTS1hiQjhKMmFOZ2oweU1uejM1MFRibmhHM1BSQUY?oc=5",
+   "published": "2026-10-31T16:09:30Z",
+   "tag": "CRYPTO"
+  },
   {
    "title": "Majority of funds stolen in cryptocurrency hack replenished, Binance says",
    "source": "Sky News",
    "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQbzh6QlFibkdUNjlwdWJRUG9HcGp3MXFkVVFHRjN0UmJhVjJ0QmlzNFJCYkVpa2t0OF9zQUR2anUwYXh2cWdGYnVEOU4zeS01dlgtYjNSdE5PRzNQdkJvY2l0R0FESUNKMUNJSW1VQXZ5allkNllncEJOektuNzBuZWlXNmhvTHItVDJrN1pWRlNvSDNqamlGUGt2eUJmcEcwU0JpSmxSajVRaDBM?oc=5",
-   "published": "2026-10-31T15:17:12Z",
-   "tag": "CRYPTO"
-  },
-  {
-   "title": "XRP price at Oct 31, 2026 at 12pm EDT Crypto Prediction Market",
-   "source": "Robinhood",
-   "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNZXNyR2VQSnJnc1pCTUFDZFUta3d1NERwRGxaalRWcEo4d1hCY1F6WHhfY3FHVXd3ckFLSDh6dTZpMjgwTlZiaVRzb21oYjhDR053eGIzWlhJdkprazVjNC1BaE5GUl9yRFZQR0lJOWp0WUQ0ZDl6bUpGWThGTER5QTItV3QxNlFiQkdXcXRxTHRCbmFwT1BTa29zQ0RFaWtwd2daeEFwbm53eENvb0VZ?oc=5",
-   "published": "2026-10-31T15:06:43Z",
-   "tag": "XRP"
-  },
-  {
-   "title": "How suspected North Korean hackers swiped billions in crypto in only minutes",
-   "source": "The Washington Post",
-   "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQWHE4QnBQRF9vakp0a0VReVZFSjNOa2hmODFJOHdLTGlzSnBkRW4yei1rbkY5cFNyT0tYbmlfQ2dIZG9GN2wyaGtIZnpMNUQ2Smx1ODVKMHJZdEhnUk9WbkZhYnJ2NmkxaUNJTXZvcmpRQ2tZa1RjdEFNSjNjWUk0QXVKSlotVEtNVmI5ME5fLXIwV0k1WTdGR0VFNmVQb2VIQ0pULXZlR0JILXdqTDZSa2hwSlJTVnRBWDlzbURhV185Zw?oc=5",
-   "published": "2026-10-31T15:03:42Z",
-   "tag": "CRYPTO"
-  },
-  {
-   "title": "DNS Hijacking Campaign Targets 12 Cryptocurrency Sites as Registrar-Level Compromise Investigated",
-   "source": "CircleID",
-   "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNRDJuRUNzbmpWZGFJMy1KRHBKRkhaZTl0SXFkSWlnSFBkVFFLa1JRVXVReklPZFoyOTF5MzJ2SHlQRkp0U3VOcGtGMTBZZkRsVnRhTXdXZWRJQTBiWnN0WVcxZ2NOSklIVzlENWJCMXp1ZDMySEtTempzcHJWZnE2TlpvbG9saGJ4VW9xdEpuUW5vSXhFWm1QZVJiQkVpbHRrODZaZEtUbXhoc3lhWjV0MXFBOExOZzZUZGlWTDE4OFNUUQ?oc=5",
-   "published": "2026-10-31T14:55:00Z",
-   "tag": "CRYPTO"
-  },
-  {
-   "title": "Ripple to Unlock 1 Billion XRP on November 1, 2026",
-   "source": "KuCoin",
-   "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPdHBoSWZfUlZoZlNGZmtoQmNwaVN6RU53NVdIVHEyQmxMb3p1U3I3ckh3UDNldHN2SGJpMDFaSU1HM0duZ2p3bFMtc3d4bWstMXFRMHMyUG5qak5vTExBQmZvWktfbm81SmR5TzR6bS1xcXp1Xy1GelNKbzZqUWhkYW9nLW83Z1o0LUlz?oc=5",
-   "published": "2026-10-31T14:32:06Z",
-   "tag": "XRP"
-  },
-  {
-   "title": "Binance hack heralds new era of corporate heists",
-   "source": "UnHerd",
-   "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOZ3JpM2JIT2Z0WWNVd3l6UG5zWlZVeHN4LWNlYTRxQkFrbWhRajF6aEtEeFZKTjNWRmNwbF9nSkt2bzNZT1pHOFVJOG9fd1pjN1MxcEpneWlaWjBqZFd5UVVZS1duWlNRMUZ3MGhyVVZSODcxcTJjRTBHeGhBRmNKcUNEUUV3RXFCV2lMZG54U0ZFUQ?oc=5",
-   "published": "2026-10-31T13:30:00Z",
+   "published": "2026-10-31T16:01:12Z",
    "tag": "CRYPTO"
   },
   {
@@ -51,28 +58,56 @@
    "tag": "HBAR"
   },
   {
-   "title": "Stellar price: Bell upgrade puts November votes in focus",
+   "title": "Cardano price: CIP-0113 gains a route into Swiss tokenized shares",
    "source": "ad-hoc-news.de",
-   "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPU2RuUlpfNmZHNFo2S1ZncHJ4VElkSlMzUkhrYU1Qaks5S3ZSX2hCNExidGNzMWlOeDJraHR3LWZTNFN6UnF6TzBpdlhpOG5NWTN3MmxBTHRndDFSTjQ0M2ViTV9RLXVLYUtQTkZucUxBX1o3MlRyZGRhWEZNVTJpMF9qWWhTUlRlRVBQcGlPQVNDR0dZVXhMZlJ1N213OEJIXzg0ZjdRSXZIWG9wZDdKaGhLNmc0eDcw?oc=5",
-   "published": "2026-10-31T12:08:19Z",
-   "tag": "XLM"
+   "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQam9jTGJNQjVWTXk1ZkdXcHkwLXZHbHlCNUNNdl9VcWQ5WmpKZFh4NV9xbWtnNUlDR1VXTnF5VjRmTWV3djJKS29oa3dha2trcG0xeENuSEREV2hnZnIzUm5rRXExMHItZmNlU2VUVWNmNkF3ZThtalBMbUN4UmJBek80VFI5QUQwMi1fWFkxOWp3aUZLQ3A1NU5hY2V4UWVPRkgyMHRkaW1EN3FpTWVYTUlnM1NUakNwMHRaeHlNZmlLWUZl?oc=5",
+   "published": "2026-10-31T12:07:52Z",
+   "tag": "ADA"
   },
   {
-   "title": "Stellar price stays near 0.17 USD as Bell votes approach",
-   "source": "ad-hoc-news.de",
-   "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPQ0JBdVdqZ2MyeGwwSjNBZEhfM3dWQlQ5M2ZCQkJGa2ppNC15T2x4NDl5MEVrNDVhNkVQZjdXaG13MkVQRU44V1NKcV9CRDBmOEpreDVIdGpPSURIWURRTXVQR25Oc1RQeTY1OWlqM19oNXJreVJ3a1FWWHhTN2JWVl9kM0ZGbC1CWUgzR1dYdzBxOXZ4QWtKZGg0RXBnQ0g0aHQxVjFGZTlGd3VhbzFyS25KeFFNN0NvM3c?oc=5",
-   "published": "2026-10-31T06:06:56Z",
-   "tag": "XLM"
+   "title": "QNT: Van de Poppe Flags $200 Support Flip",
+   "source": "Blockchain News",
+   "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE1BUlpmM0UtTk9hMVZFbDBGdXNNUmFNU3Y0WktnbEthTE5Xd2xvU0c1Y3RZWE03OGV1TkFOX1BmWlg5alZ4Q1VfNktLSFFGLXlSWW8xMUx6cnJBZERrOVV5ejdLRVdWX3c5aklMdmR2clhNNjNoakNOUXJxVXN0dw?oc=5",
+   "published": "2026-10-31T03:46:00Z",
+   "tag": "QNT"
   },
   {
-   "title": "Hedera Coin Price Today: HBAR Launches Network Upgrade as Analysts Eye 300x for Pepeto",
-   "source": "TechBullion",
-   "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNOXV4LUlfWTVHTVdTaG1XOHgxT1dKNHAwcXFpYTJub0J5TXZkUnhoTHNWc3lIYTNGNVFja1p1cTdJdmFEN3VSaVJIOGo5d1NOMXIyZ0F6QjNINFBZWGExSWZ6ZklZUFJNcEh3TV9ZdWZyaGpWTWlSWTlpRE5wcVBlS1FGR0FVVFM0QldMeUxPdTZDWWRMWmo3YkpHMVRJYWFoLWpJc3hleENxbzdSMVB3?oc=5",
-   "published": "2026-10-30T21:40:03Z",
-   "tag": "HBAR"
+   "title": "Canton Network Settles Uber Tokenized Treasury Pilot With HSBC Deposits and a Franklin Templeton Fund",
+   "source": "https://genfinity.io/",
+   "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQNjR4cENOeU84WEJ6RG5JVzZzY1A0Z1pyWUlnMlh1OFEySGRBbFgzX09lem5oQWVYNVlEMEhEclhhQV9RNlBldWMxdFRhSUwwWkwxVUZtM0V0UE15emo0Q1R1UjhENzExVm5KMXlfSmhrZFczcC1KdlRWMklPMEhXdkhkVlFaWkVHbzFpT012QndkWFhfMkl3UW1BVVIzODc2bjFMUUdhemx0UWxVc244dWhPY2txZw?oc=5",
+   "published": "2026-10-31T03:06:57Z",
+   "tag": "XDC"
+  },
+  {
+   "title": "Pyth Network Oracles Now Secure About $3.12 Billion in Assets, DefiLlama Data Shows",
+   "source": "Cryptonews.net",
+   "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBuVzRJRkc2dGpyN21nM09hR2s5OWMxVjBPSzBnZDNVYzJQZ1k5NkdpbVFyb0lqd0ZVcGp1ZWhjNllnT3V1U255NWJGRU1iYVpocW9qT3hhYlB1VHpo?oc=5",
+   "published": "2026-10-30T10:51:48Z",
+   "tag": "IOTA"
   }
  ],
  "legislation": [
+  {
+   "title": "Ethereum Price Risks $2,000 as ETFs Record $1.61B in Outflows",
+   "source": "The Market Periodical",
+   "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9COFJMTVJaUjRnZDl5UEZjYW80TmExMDRFVi1Sb1VhaWFGQmVVNDlYN0hhT1ByUEpTallMVHJlTkJTMnBmWlpXM2sxM2U0SzFuaVV6Y3RBZWctalU5RFZKc19wYTYwSnNxQWZ0aWtUbktUclVDOGhPbQ?oc=5",
+   "published": "2026-10-31T18:05:13Z",
+   "tag": "CLARITY"
+  },
+  {
+   "title": "Tokenized Real-World Assets Redefining the Financial Frontier",
+   "source": "OneSafe.io",
+   "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9CTG1GdGQ2aG1IWXY0UG5GMkJpbWw0N0VsWS1zOUdSWHBMMWNXN1M2SlN0UTFKbzQ5VWUtQlc0ZTQ0MEZpZkV5VFRkYVZVMFpHTndvLXFxdXRYOGlnQTBrN3p6MnFkVHNrUUlWQXZwWlVoRUNnTWVwb21NQjRmS0U?oc=5",
+   "published": "2026-10-31T17:51:20Z",
+   "tag": "TOKEN"
+  },
+  {
+   "title": "Can Bitcoin Reclaim $80K Before the SEC Rewrites the Rules for Crypto Funds?",
+   "source": "CryptoDaily",
+   "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQcEJGejF2UFlhYWJfSzNmVkprSEoxSlpGanI1R3VKeHloZUR2SklqNDRrZlZkcnprSjhfM2dzaG1YSmVXR1hORWlORGR4dFZtSjdNbEVJM3ROc2FrR1U2R0ZHR3QxVUoxSUdiSGlWWE5tQTU2Z1ZCTUdVVGMzN25Xa3d1N29saVNfakdFS1RoUS11RU1oUXM3a3VoeHBXZGFVTExOd3p0ZzBKQ1Mx?oc=5",
+   "published": "2026-10-31T16:00:00Z",
+   "tag": "SEC"
+  },
   {
    "title": "Tokenized assets are opening up to DeFi: New use cases, new risks",
    "source": "Haberler.com",
@@ -102,69 +137,53 @@
    "tag": "GENIUS"
   },
   {
-   "title": "Blockchain Revenue Falls 30% as Institutional Adoption and Tokenized Assets Gain Ground",
-   "source": "Hokanews",
-   "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1iQVJud0JYYTRGOXJHNDh5V2lHb1VydEtSRzRDaXFsb1g4eHI1TG1nQlI2ckJSZGVzUGFrcHVRMW44aHBRSThwWDVCYi1oRXZvcW9QcGJ5NXl2SF9vbkE3T2FuLWNzWm5HOElFZ0N3Sm45aUc2cnVZ?oc=5",
-   "published": "2026-10-31T13:37:00Z",
-   "tag": "TOKEN"
-  },
-  {
    "title": "Crypto industry pours more than $200 million into 2026 midterms to pressure Congress on favorable rules",
    "source": "CNBC",
    "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPeW1XVUVpT3R3X1lMVXE2YmFLVms5MEZ1QkdLZ3ZNV0VBemdXSU1nVjZHLWtHR01vdUkyTW9Del9aUFNyN0VQVnFEMVNkS2dXWmlDZ3RxVElSNHhWMkNnWGpSWjJyTklIVGt0YVEyR3ZKMU4zQkZvaERtZ1ZZVS1kR1FEVnM4UWhneFFvT3FEelVtMWRXM25jT0hjUWRGb29WYWxxQtIBqgFBVV95cUxNQ0NRQ19zbmNXblhXWFFKX1JyRHNtcTg5akxnY25mRE9SZUg4LUdwazlVTlJyU05Ib3FJNlAwdUhpSlRwdW04T3lCNU9oSS1nRE1BMlNVV3UzLVhYNXBmWWNiQXBrZGxtZUxreXF4bFJMc3BtS05hYmM2bUhCa1RZSDVVWlFpd1VsYTBEaUZDUmxyVUJYUDY2X2lQM243a0Z6bExlR0RIcGN6UQ?oc=5",
    "published": "2026-10-31T13:04:29Z",
    "tag": "CLARITY"
-  },
-  {
-   "title": "Bitwise, Galaxy Digital and Morpho Back CCI Framework for U.S. Crypto Vault Regulation",
-   "source": "Hokanews",
-   "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNS0R0T1hmWmZpTGY3bmFlTWtRQnhiQy1NaWdOOUp6Q1YyTkpEU2NrMHNPa19EUFNsWnQwMHZIM2NhaVVxbDBldTVuSmxPVEF2NDF3SFVHckFWLXZKa3M5MEw4Smc0OGxqTTRvcjNLRUtHTjl3V1BNSmtEdk04c3k4SnJR?oc=5",
-   "published": "2026-10-31T12:21:00Z",
-   "tag": "CLARITY"
-  },
-  {
-   "title": "Crypto ETFs now include many altcoins beyond Bi...",
-   "source": "Pluang",
-   "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNRndBei1DLXpTM2JHWHBhNkU5VWRwOHR4b3lLc2k2ekVsRlpHTGJfUERWakZiU21qRnBvak1hOE92bUFZLXR6eTR1c3FtdkpabWpsTnhjZ3U5X2RwRFZ1NDVBSW1OR3JWR3k4UW9WNnpUTW02MllYaHVYWE9UWHA1N0N4bUJ3M3lIZ3c?oc=5",
-   "published": "2026-10-31T01:55:34Z",
-   "tag": "SEC"
   }
  ],
  "buzz": {
   "coins": {
    "XRP": 100,
    "HBAR": 7,
-   "XLM": 38
+   "XLM": 36,
+   "QNT": 9,
+   "ALGO": 10,
+   "XDC": 9,
+   "IOTA": 2,
+   "ADA": 58
   },
   "topics": [
    {
     "name": "CLARITY ACT",
     "tag": "CLARITY",
-    "count": 39,
+    "count": 23,
     "buzz": 100
    },
    {
     "name": "GENIUS ACT",
     "tag": "GENIUS",
-    "count": 42,
+    "count": 39,
     "buzz": 100
    },
    {
     "name": "SEC + CRYPTO",
     "tag": "SEC",
-    "count": 29,
+    "count": 61,
     "buzz": 100
    },
    {
     "name": "CONGRESS",
     "tag": "CONGRESS",
-    "count": 41,
+    "count": 28,
     "buzz": 100
    },
    {
     "name": "TOKENIZATION",
     "tag": "TOKEN",
-    "count": 66,
+    "count": 50,
     "buzz": 100
    }
   ]
