@@ -1,6 +1,27 @@
 {
- "updated": "2026-10-31T15:25:10Z",
- "bills": [],
+ "updated": "2026-10-31T15:32:44Z",
+ "bills": [
+  {
+   "id": "H.R. 3633",
+   "title": "Digital Asset Market Clarity Act",
+   "sponsor": "Rep. Hill, J. French [R-AR-2]",
+   "introduced": "2025-05-29",
+   "action": "Motion by Senator Tillis to reconsider the vote by which cloture on the motion to proceed to the measure was not invoked (Record Vote No. 234) entered in Senate.",
+   "action_date": "2026-09-15",
+   "stage": "ACTIVE",
+   "url": "https://www.congress.gov/bill/119th-congress/house-bill/3633"
+  },
+  {
+   "id": "S. 1582",
+   "title": "GENIUS Act",
+   "sponsor": "Sen. Hagerty, Bill [R-TN]",
+   "introduced": "2025-05-01",
+   "action": "Became Public Law No: 119-27.",
+   "action_date": "2025-07-18",
+   "stage": "LAW",
+   "url": "https://www.congress.gov/bill/119th-congress/senate-bill/1582"
+  }
+ ],
  "rules": [
   {
    "title": "Agency Information Collection Activities: Proposed Information Collection; Submission for OMB Review; Applications for Licensing or Registration To I…",
@@ -60,7 +81,7 @@
   }
  ],
  "rwa": {
-  "total": 3951294592,
+  "total": 3951292158,
   "count": 119,
   "top": [
    {
@@ -114,9 +135,9 @@
    },
    {
     "name": "R25",
-    "tvl": 196424476,
-    "d1": -0.0370595627263981,
-    "d7": 7.719313081772611,
+    "tvl": 196421352,
+    "d1": -0.038649489024763284,
+    "d7": 7.71029084475478,
     "url": "https://defillama.com/protocol/r25"
    }
   ]
