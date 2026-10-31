@@ -1,21 +1,7 @@
 {
- "updated": "2026-10-30T22:25:42Z",
+ "updated": "2026-10-31T15:25:10Z",
  "bills": [],
  "rules": [
-  {
-   "title": "Medicare Program; CY 2027 Changes to the End-Stage Renal Disease (ESRD) Prospective Payment System, Acute Kidney Injury (AKI) Dialysis Payment, and E…",
-   "agency": "Health and Human Services Department",
-   "type": "Rule",
-   "date": "2026-10-30",
-   "url": "https://www.federalregister.gov/documents/2026/10/30/2026-22194/medicare-program-cy-2027-changes-to-the-end-stage-renal-disease-esrd-prospective-payment-system"
-  },
-  {
-   "title": "Additional Reconsideration Standards of Performance for New, Reconstructed, and Modified Sources and Emissions Guidelines for Existing Sources: Oil a…",
-   "agency": "Environmental Protection Agency",
-   "type": "Proposed Rule",
-   "date": "2026-10-29",
-   "url": "https://www.federalregister.gov/documents/2026/10/29/2026-22082/additional-reconsideration-standards-of-performance-for-new-reconstructed-and-modified-sources-and"
-  },
   {
    "title": "Agency Information Collection Activities: Proposed Information Collection; Submission for OMB Review; Applications for Licensing or Registration To I…",
    "agency": "Treasury Department",
@@ -24,99 +10,113 @@
    "url": "https://www.federalregister.gov/documents/2026/10/29/2026-22036/agency-information-collection-activities-proposed-information-collection-submission-for-omb-review"
   },
   {
-   "title": "NCUA Draft 2027-2028 Budget",
+   "title": "Implementing the Guiding and Establishing National Innovation for U.S. Stablecoins Act for the Issuance of Stablecoins by Entities Subject to the Jur…",
+   "agency": "Treasury Department",
+   "type": "Rule",
+   "date": "2026-10-23",
+   "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21706/implementing-the-guiding-and-establishing-national-innovation-for-us-stablecoins-act-for-the"
+  },
+  {
+   "title": "Agency Information Collection Activities: Proposed Information Collection; Submission for OMB Review; Reporting Forms and Instructions for Permitted…",
+   "agency": "Treasury Department",
+   "type": "Notice",
+   "date": "2026-10-23",
+   "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21705/agency-information-collection-activities-proposed-information-collection-submission-for-omb-review"
+  },
+  {
+   "title": "Agency Information Collection Activities: Proposed Information Collection; Submission for OMB Review; Applications for Licensing or Registration To I…",
+   "agency": "Treasury Department",
+   "type": "Notice",
+   "date": "2026-10-23",
+   "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21704/agency-information-collection-activities-proposed-information-collection-submission-for-omb-review"
+  },
+  {
+   "title": "Regulation Crypto Asset Transactions and Regulation Crypto Asset Markets",
+   "agency": "Commodity Futures Trading Commission",
+   "type": "Proposed Rule",
+   "date": "2026-10-13",
+   "url": "https://www.federalregister.gov/documents/2026/10/13/2026-20888/regulation-crypto-asset-transactions-and-regulation-crypto-asset-markets"
+  },
+  {
+   "title": "Agency Information Collection Activities; Proposed Collection; Comment Request; Information-Sharing Initiative: Digital Assets Criteria Form",
+   "agency": "Treasury Department",
+   "type": "Notice",
+   "date": "2026-10-09",
+   "url": "https://www.federalregister.gov/documents/2026/10/09/2026-20737/agency-information-collection-activities-proposed-collection-comment-request-information-sharing"
+  },
+  {
+   "title": "Proposed Agency Information Collection Activities; Comment Request",
    "agency": "National Credit Union Administration",
    "type": "Notice",
-   "date": "2026-10-28",
-   "url": "https://www.federalregister.gov/documents/2026/10/28/2026-21948/ncua-draft-2027-2028-budget"
+   "date": "2026-10-09",
+   "url": "https://www.federalregister.gov/documents/2026/10/09/2026-20729/proposed-agency-information-collection-activities-comment-request"
   },
   {
-   "title": "Establishment of Federal Advisory Committees-Advisory Council on Health and Human Performance Optimization",
-   "agency": "Defense Department",
-   "type": "Notice",
-   "date": "2026-10-27",
-   "url": "https://www.federalregister.gov/documents/2026/10/27/2026-21900/establishment-of-federal-advisory-committees-advisory-council-on-health-and-human-performance"
-  },
-  {
-   "title": "Notice of Regulatory Waiver Requests Granted for the First Quarter of Calendar Year 2026",
-   "agency": "Housing and Urban Development Department",
-   "type": "Notice",
-   "date": "2026-10-27",
-   "url": "https://www.federalregister.gov/documents/2026/10/27/2026-21886/notice-of-regulatory-waiver-requests-granted-for-the-first-quarter-of-calendar-year-2026"
-  },
-  {
-   "title": "Cboe Clear U.S., LLC; Order Granting an Application, as Amended, for Temporary Registration as a Clearing Agency Under Section 17A of the Securities…",
+   "title": "Self-Regulatory Organizations; Investors Exchange LLC; Notice of Filing and Immediate Effectiveness of Proposed Rule Change To Establish Listing Stan…",
    "agency": "Securities and Exchange Commission",
    "type": "Notice",
-   "date": "2026-10-27",
-   "url": "https://www.federalregister.gov/documents/2026/10/27/2026-21845/cboe-clear-us-llc-order-granting-an-application-as-amended-for-temporary-registration-as-a-clearing"
-  },
-  {
-   "title": "Outbound Investment Security Program Regulations",
-   "agency": "Treasury Department",
-   "type": "Proposed Rule",
-   "date": "2026-10-26",
-   "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21786/outbound-investment-security-program-regulations"
+   "date": "2026-10-07",
+   "url": "https://www.federalregister.gov/documents/2026/10/07/2026-20505/self-regulatory-organizations-investors-exchange-llc-notice-of-filing-and-immediate-effectiveness-of"
   }
  ],
  "rwa": {
-  "total": 3946110595,
+  "total": 3951294592,
   "count": 119,
   "top": [
    {
     "name": "Ethena USDtb",
-    "tvl": 484365693,
-    "d1": 2.103889582616091,
-    "d7": 1.5551157644334381,
+    "tvl": 484381331,
+    "d1": 0.0019732573303059553,
+    "d7": 1.5770109739322749,
     "url": "https://defillama.com/protocol/ethena-usdtb"
    },
    {
     "name": "Re",
-    "tvl": 477027962,
-    "d1": 0.6011556181349818,
-    "d7": 3.4672525902781786,
+    "tvl": 478933477,
+    "d1": 0.2840056244500744,
+    "d7": 3.199060504810447,
     "url": "https://defillama.com/protocol/re"
    },
    {
     "name": "Huma",
-    "tvl": 377849148,
-    "d1": 2.404162047752422,
-    "d7": 0.6308950134086757,
+    "tvl": 381515714,
+    "d1": 0.1357157047831663,
+    "d7": 1.605224786222422,
     "url": "https://defillama.com/protocol/huma"
    },
    {
     "name": "OnRe",
-    "tvl": 307473670,
-    "d1": 0.7772834590851829,
-    "d7": 4.153431647775747,
+    "tvl": 307649358,
+    "d1": 1.1078615934687122,
+    "d7": 4.148659286036292,
     "url": "https://defillama.com/protocol/onre"
    },
    {
     "name": "USD AI",
-    "tvl": 274322951,
-    "d1": 1.7354785986111665,
-    "d7": 4.917836135432907,
+    "tvl": 274278342,
+    "d1": 0.5968269944782918,
+    "d7": 4.889584080981237,
     "url": "https://defillama.com/protocol/usd-ai"
    },
    {
     "name": "OpenTrade",
-    "tvl": 246560185,
-    "d1": 0.1499513191002535,
-    "d7": 0.3179930431473963,
+    "tvl": 246635973,
+    "d1": 0.15470821834269088,
+    "d7": 0.3352679290507439,
     "url": "https://defillama.com/protocol/opentrade"
    },
    {
     "name": "Plume Vaults",
-    "tvl": 231032484,
-    "d1": -1.2120632148043597,
-    "d7": 1.3031021777920984,
+    "tvl": 228872934,
+    "d1": -1.88455230658559,
+    "d7": -0.11286119897246749,
     "url": "https://defillama.com/protocol/plume-vaults"
    },
    {
     "name": "R25",
-    "tvl": 196517895,
-    "d1": -0.18153608338464267,
-    "d7": 9.213009721672279,
+    "tvl": 196424476,
+    "d1": -0.0370595627263981,
+    "d7": 7.719313081772611,
     "url": "https://defillama.com/protocol/r25"
    }
   ]
