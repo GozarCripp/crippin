@@ -44,15 +44,55 @@ def clean(text, limit=160):
     return text if len(text) <= limit else text[: limit - 1].rstrip() + "…"
 
 
-def stage(action, law):
-    a = (action or "").lower()
-    if law or "became public law" in a:
-        return "LAW"
-    if "passed" in a or "agreed to" in a:
-        return "PASSED"
-    if "referred" in a or "committee" in a:
-        return "COMMITTEE"
-    return "ACTIVE"
+PASSED = re.compile(r"^passed(?:/agreed to in)?\s+(?:the\s+)?(house|senate)\b", re.I)
+
+
+def status(origin, acts, law):
+    """Where is the bill and whose turn is it? Built from the official action list.
+    acts=None means the list could not be fetched, so we say ACTIVE instead of guessing."""
+    if law:
+        return "LAW", "DONE", None, None
+    if acts is None:
+        return "ACTIVE", "", None, None
+    house = senate = None
+    president = vetoed = False
+    for a in sorted(acts, key=lambda a: a.get("actionDate") or ""):
+        text = (a.get("text") or "").strip()
+        m = PASSED.match(text)
+        if m:
+            if m.group(1).lower() == "house":
+                house = house or a.get("actionDate")
+            else:
+                senate = senate or a.get("actionDate")
+        low = text.lower()
+        president = president or low.startswith("presented to president")
+        vetoed = vetoed or low.startswith("vetoed by president")
+        if low.startswith("became public law"):
+            return "LAW", "DONE", house, senate
+    if vetoed:
+        return "VETOED", "CONGRESS", house, senate
+    if president:
+        return "AT PRESIDENT", "PRESIDENT", house, senate
+    if house and senate:
+        return "PASSED BOTH", "CONGRESS", house, senate
+    if house:
+        return "PASSED HOUSE", "SENATE", house, senate
+    if senate:
+        return "PASSED SENATE", "HOUSE", house, senate
+    if (origin or "").lower() == "senate":
+        return "IN SENATE", "SENATE", None, None
+    return "IN HOUSE", "HOUSE", None, None
+
+
+def fetch_actions(typ, num, key):
+    try:
+        raw = fetch(f"https://api.congress.gov/v3/bill/{CONGRESS}/{typ}/{num}/actions?format=json&limit=250",
+                    {"X-Api-Key": key})
+        return json.loads(raw).get("actions") or []
+    except Exception as exc:
+        print(f"actions {typ} {num} failed: {type(exc).__name__} {getattr(exc, 'code', '')}".strip(),
+              file=sys.stderr)
+        return None
 
 
 def bills(key):
@@ -68,6 +108,7 @@ def bills(key):
             continue
         latest = b.get("latestAction") or {}
         spon = (b.get("sponsors") or [{}])[0]
+        st, ball, hp, sp = status(b.get("originChamber"), fetch_actions(typ, num, key), bool(b.get("laws")))
         label = ("H.R. " if typ == "hr" else "S. ") + num
         slug = "house-bill" if typ == "hr" else "senate-bill"
         out.append({
@@ -77,7 +118,7 @@ def bills(key):
             "introduced": b.get("introducedDate"),
             "action": clean(latest.get("text"), 180),
             "action_date": latest.get("actionDate"),
-            "stage": stage(latest.get("text"), b.get("laws")),
+            "stage": st, "ball": ball, "house_passed": hp, "senate_passed": sp,
             "url": f"https://www.congress.gov/bill/{CONGRESS}th-congress/{slug}/{num}",
         })
     return out

@@ -42,6 +42,10 @@ class News(unittest.TestCase):
 
 class Gov(unittest.TestCase):
     def fake(self, url, headers=None):
+        if "/actions" in url:
+            return json.dumps({"actions": [
+                {"actionDate": "2025-07-17", "text": "Passed/agreed to in House: On passage Passed by the Yeas and Nays: 294 - 134."},
+                {"actionDate": "2025-07-18", "text": "Received in the Senate."}]}).encode()
         if "congress.gov" in url:
             self.assertEqual(headers.get("X-Api-Key"), "k")      # key goes in a header...
             self.assertNotIn("api_key", url)                      # ...never in the URL
@@ -64,9 +68,24 @@ class Gov(unittest.TestCase):
         p = tempfile.mktemp(suffix=".json")
         self.assertEqual(fg.main(p), 0)
         d = json.load(open(p))
-        self.assertEqual(d["bills"][0]["stage"], "COMMITTEE")
+        self.assertEqual(d["bills"][0]["stage"], "PASSED HOUSE")
+        self.assertEqual(d["bills"][0]["ball"], "SENATE")           # House passed it: Senate's turn
+        self.assertEqual(d["bills"][0]["house_passed"], "2025-07-17")
         self.assertEqual(len(d["rules"]), 1)                      # http link + off-topic rule dropped
         self.assertEqual(d["rwa"]["total"], 5_000_000_000)        # only RWA category counted
+
+    def test_status_branches(self):
+        fg = load("fetch_gov")
+        s = lambda o, a, law=False: fg.status(o, a, law)[:2]
+        self.assertEqual(s("House", []), ("IN HOUSE", "HOUSE"))
+        self.assertEqual(s("Senate", []), ("IN SENATE", "SENATE"))
+        self.assertEqual(s("Senate", [{"actionDate": "1", "text": "Passed Senate with an amendment"}]), ("PASSED SENATE", "HOUSE"))
+        self.assertEqual(s("House", [{"actionDate": "1", "text": "Presented to President."}]), ("AT PRESIDENT", "PRESIDENT"))
+        self.assertEqual(s("House", [{"actionDate": "1", "text": "Vetoed by President."}]), ("VETOED", "CONGRESS"))
+        self.assertEqual(s("House", [{"actionDate": "1", "text": "Became Public Law No: 1."}]), ("LAW", "DONE"))
+        self.assertEqual(s("House", None), ("ACTIVE", ""))          # unknown, so no guessing
+        both = [{"actionDate": "1", "text": "Passed/agreed to in House: x"}, {"actionDate": "2", "text": "Passed/agreed to in Senate: y"}]
+        self.assertEqual(s("House", both), ("PASSED BOTH", "CONGRESS"))
 
     def test_no_key_skips_bills_but_runs_rest(self):
         fg = load("fetch_gov"); fg.fetch = self.fake

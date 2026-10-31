@@ -345,7 +345,7 @@
   function link(text,url){ var a=el('a',null,text); a.href=/^https:\/\//i.test(url||'')?url:'#'; a.target='_blank'; a.rel='noopener noreferrer nofollow'; return a; }
   function money(n){ n=Number(n); if(!isFinite(n)) return '--'; return n>=1e9?'$'+(n/1e9).toFixed(2)+'B':n>=1e6?'$'+(n/1e6).toFixed(1)+'M':'$'+Math.round(n).toLocaleString('en-US'); }
   function pct(p){ p=Number(p); return isFinite(p)?(p>=0?'+':'')+p.toFixed(1)+'%':'--'; }
-  var STAGE={LAW:'g',PASSED:'b',COMMITTEE:'y',ACTIVE:'k'};
+  var STAGE={'LAW':'g','PASSED BOTH':'g','AT PRESIDENT':'g','PASSED HOUSE':'b','PASSED SENATE':'b','IN HOUSE':'y','IN SENATE':'y','VETOED':'k','ACTIVE':'y'};
 
   function bills(d){
     var box=document.getElementById('billBox'); if(!box) return;
@@ -356,6 +356,8 @@
       var r=el('div','bill'), left=el('span'), t=el('b'); t.appendChild(link(b.id+' // '+b.title,b.url));
       left.appendChild(t);
       left.appendChild(el('i',null,'SPONSOR: '+(b.sponsor||'--')+' // INTRODUCED '+(b.introduced||'--')));
+      var trail=[]; if(b.ball) trail.push('BALL IN: '+b.ball); if(b.house_passed) trail.push('HOUSE PASSED '+b.house_passed); if(b.senate_passed) trail.push('SENATE PASSED '+b.senate_passed);
+      if(trail.length) left.appendChild(el('i','ball',trail.join(' // ')));
       left.appendChild(el('i',null,(b.action_date||'')+' '+(b.action||'')));
       r.appendChild(left); r.appendChild(el('span','sticker '+(STAGE[b.stage]||'y'),b.stage||'')); box.appendChild(r);
     });

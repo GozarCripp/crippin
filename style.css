@@ -226,3 +226,5 @@
 .bar{ height:12px; margin-top:6px; background:#06303f; border:2px solid #021a26; }
 .bar i{ display:block; height:100%; background:var(--blue); font-style:normal; }
 .bill .sticker{ align-self:flex-start; }
+
+.bill i.ball{ color:var(--yellow); }
