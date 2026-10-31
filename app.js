@@ -21,6 +21,7 @@
   ang.forEach(function(_,i){
     var lx=C+(R+20)*Math.cos(ang[i]), ly=C+(R+16)*Math.sin(ang[i])+3;
     h+='<text x="'+lx.toFixed(1)+'" y="'+ly.toFixed(1)+'" text-anchor="middle" font-family="Press Start 2P" font-size="7" letter-spacing="0" fill="#ffee33">'+labels[i]+'</text>';
+    h+='<text class="rp" x="'+lx.toFixed(1)+'" y="'+(ly+10).toFixed(1)+'" text-anchor="middle" font-family="Press Start 2P" font-size="7" fill="#46ff7f">0%</text>';
   });
   h+='<g class="sweep"><line x1="100" y1="100" x2="100" y2="36" stroke="#c9ffd8" stroke-width="2" opacity=".55"/></g>';
   h+='<polygon id="radarPoly" points="" fill="#46ff7f" fill-opacity=".55" stroke="#c9ffd8" stroke-width="2.5"/>';
@@ -39,8 +40,15 @@
   var TOKENS=[
     {id:'ripple',           name:'XRP',  tick:'/XRP',  launch:2012},
     {id:'hedera-hashgraph', name:'HBAR', tick:'/HBAR', launch:2019},
-    {id:'stellar',          name:'XLM',  tick:'/XLM',  launch:2014}
+    {id:'stellar',          name:'XLM',  tick:'/XLM',  launch:2014},
+    {id:'quant-network',    name:'QNT',  tick:'/QNT',  launch:2018},
+    {id:'algorand',         name:'ALGO', tick:'/ALGO', launch:2019},
+    {id:'xdce-crowd-sale',  alt:'xdc-network', name:'XDC', tick:'/XDC', launch:2019},   // alt = second known CoinGecko id, whichever answers wins
+    {id:'iota',             name:'IOTA', tick:'/IOTA', launch:2016},
+    {id:'cardano',          name:'ADA',  tick:'/ADA',  launch:2017}
   ];
+  function idList(){ var a=[]; TOKENS.forEach(function(t){ a.push(t.id); if(t.alt) a.push(t.alt); }); return a.join(','); }
+  function big(n){ return n>=1e9?'$'+(n/1e9).toFixed(2)+'B':n>=1e6?'$'+(n/1e6).toFixed(1)+'M':'$'+Math.round(n).toLocaleString('en-US'); }
   // Not vetted. Display-only: no price feed, no click. Reasons are plain, opinion-style labels.
   var DENIED=[
     {name:'HAWK TUAH COIN', tick:'/HAWK',  note:'celebrity memecoin // not vetted', stamp:'NOT INVITED'},
@@ -79,7 +87,11 @@
   /* ---- radar: animated tween so the star morphs when you switch tokens or prices update ---- */
   var poly=document.getElementById('radarPoly'), cur=[0,0,0,0,0], raf=0;
   var calm=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function paint(v){ poly.setAttribute('points', v.map(function(x,i){return pt(i,x/100);}).join(' ')); }
+  var rp=[].slice.call(svg.querySelectorAll('text.rp'));
+  function paint(v){
+    poly.setAttribute('points', v.map(function(x,i){return pt(i,x/100);}).join(' '));
+    rp.forEach(function(n,i){ n.textContent=Math.round(v[i])+'%'; });   // each axis shows its real 0-100 score
+  }
   function tween(target){
     cancelAnimationFrame(raf);
     if(calm){ cur=target.slice(); paint(cur); return; }
@@ -94,28 +106,87 @@
     raf=requestAnimationFrame(step);
   }
 
-  /* ---- 7-day price chart for the selected token ----
-     Why: the line is just the price points scaled to fit the box. Find min and max,
-     map each price to a y position between them, and join the dots into a path.
-     The SVG is stretched to fit (preserveAspectRatio=none), so it stays crisp at any width. */
+  /* ---- price chart: hourly points, labelled axes, hover readout ----
+     Why: a chart without scales can't be trusted. The y axis is the real price range (period low to
+     high) and the x axis is real clock time in the viewer's own timezone. CoinGecko sends one point
+     per hour, so a point's time = the newest point's time minus one hour per step back. */
   var chartPanel=[].slice.call(document.querySelectorAll('.board > .p')).filter(function(p){ var h=p.querySelector('.ph h3'); return h&&h.textContent.trim()==='SIGNAL ACTIVITY'; })[0];
-  var chartSvg=chartPanel&&chartPanel.querySelector('svg'), chartTag=chartPanel&&chartPanel.querySelector('.tag');
+  var chartTag=chartPanel&&chartPanel.querySelector('.tag'), cbox=chartPanel&&chartPanel.querySelector('.pb');
   var NS='http://www.w3.org/2000/svg';
   function node(n,attrs){ var e=document.createElementNS(NS,n); for(var k in attrs) e.setAttribute(k,attrs[k]); return e; }
+  var cs={}, series=null;
+  if(cbox){
+    while(cbox.firstChild) cbox.removeChild(cbox.firstChild);
+    cs.read=el('div','readout','LOADING PRICE HISTORY...');
+    var wrap=el('div','chart'); cs.y=el('div','yax'); cs.plot=el('div','plot');
+    cs.svg=document.createElementNS(NS,'svg'); cs.svg.setAttribute('viewBox','0 0 760 240'); cs.svg.setAttribute('preserveAspectRatio','none');
+    cs.vline=el('div','vline'); cs.dot=el('div','dot'); cs.vline.hidden=true; cs.dot.hidden=true;
+    cs.plot.appendChild(cs.svg); cs.plot.appendChild(cs.vline); cs.plot.appendChild(cs.dot);
+    cs.x=el('div','xax'); cs.key=el('div','ckey');
+    wrap.appendChild(cs.y); wrap.appendChild(cs.plot); wrap.appendChild(el('div')); wrap.appendChild(cs.x);
+    cbox.appendChild(cs.read); cbox.appendChild(wrap); cbox.appendChild(cs.key);
+  }
+  function wipe(n){ while(n.firstChild) n.removeChild(n.firstChild); }
+  function stamp(ms){ return new Date(ms).toLocaleString(undefined,{month:'numeric',day:'numeric',hour:'numeric',minute:'2-digit'}); }
+  function stampH(ms){ return new Date(ms).toLocaleString(undefined,{month:'numeric',day:'numeric',hour:'numeric'}); }
+  function pctChange(a,b){ return a?((b-a)/a*100):0; }
+  function px(p,s){ return '$'+p.toFixed(s.dec); }               // same decimals everywhere on one chart
+  function yOf(p,s){ return 220-(p-s.lo)/s.span*200; }       // 20px padding top and bottom inside the 240px box
+  function showAt(i){
+    if(!series) return;
+    var s=series, p=s.pts[i], f=i/(s.pts.length-1);
+    cs.read.textContent=stamp(s.t0+i*s.step)+'  //  '+px(p,s)+'  //  '+fmtPct(pctChange(s.pts[0],p))+' VS 7D AGO';
+    cs.vline.hidden=false; cs.dot.hidden=false;
+    cs.vline.style.left=(f*100)+'%'; cs.dot.style.left=(f*100)+'%'; cs.dot.style.top=(yOf(p,s)/240*100)+'%';
+  }
   function drawSpark(t){
-    if(!chartSvg) return;
-    while(chartSvg.firstChild) chartSvg.removeChild(chartSvg.firstChild);
-    var g=node('g',{stroke:'#14515c','stroke-width':'1.5'});
-    [40,90,140,190].forEach(function(y){ g.appendChild(node('line',{x1:0,y1:y,x2:760,y2:y})); });
-    chartSvg.appendChild(g);
+    if(!cs.svg) return;
     var pts=t&&t.spark;
-    if(chartTag) chartTag.textContent=(t?t.name:'--')+' // 7 DAY PRICE // '+(pts?'LIVE':'LOADING');
-    if(!pts||pts.length<2) return;
+    if(chartTag) chartTag.textContent=(t?t.name:'--')+' // 7 DAY PRICE // HOURLY // YOUR LOCAL TIME';
+    if(!pts||pts.length<2){
+      series=null; cs.sig=''; wipe(cs.svg); wipe(cs.y); wipe(cs.x); wipe(cs.key); cs.vline.hidden=true; cs.dot.hidden=true;
+      cs.read.textContent=(t&&t.data)?'NO PRICE HISTORY FOR '+t.name:'LOADING PRICE HISTORY...'; return;
+    }
+    var n=pts.length, sig=t.name+n+pts[n-1]+(t.data&&t.data.last_updated);
+    if(sig===cs.sig) return;                       // nothing new since the last redraw (data changes hourly)
+    cs.sig=sig; wipe(cs.svg); wipe(cs.y); wipe(cs.x);
     var lo=Math.min.apply(null,pts), hi=Math.max.apply(null,pts), span=(hi-lo)||1;
-    var line=pts.map(function(p,i){ return (i?'L':'M')+(i/(pts.length-1)*760).toFixed(1)+','+(210-(p-lo)/span*180).toFixed(1); }).join(' ');
-    var col=pts[pts.length-1]>=pts[0]?'#46ff7f':'#ff4fa3';
-    chartSvg.appendChild(node('path',{d:line+' L760,240 L0,240 Z',fill:col,'fill-opacity':'.22'}));
-    chartSvg.appendChild(node('path',{d:line,fill:'none',stroke:col,'stroke-width':'3','stroke-linejoin':'round'}));
+    var end=Date.parse(t.data&&t.data.last_updated); if(!isFinite(end)) end=Date.now();
+    var step=3600000, s={pts:pts,lo:lo,span:span,step:step,t0:end-(n-1)*step,dec:hi>=1?2:4}; series=s;
+    var g=node('g',{stroke:'#14515c','stroke-width':'1.5'});
+    [0,.25,.5,.75,1].forEach(function(f){
+      var y=yOf(lo+span*f,s);
+      g.appendChild(node('line',{x1:0,y1:y,x2:760,y2:y}));
+      var yl=el('span',null,px(lo+span*f,s)); yl.style.top=(y/240*100)+'%'; cs.y.appendChild(yl);
+      var xl=el('span',null,stampH(s.t0+f*(n-1)*step)); xl.style.left=(f*100)+'%'; cs.x.appendChild(xl);
+    });
+    cs.svg.appendChild(g);
+    var line=pts.map(function(p,i){ return (i?'L':'M')+(i/(n-1)*760).toFixed(1)+','+yOf(p,s).toFixed(1); }).join(' ');
+    var col=pts[n-1]>=pts[0]?'#46ff7f':'#ff4fa3';
+    cs.svg.appendChild(node('path',{d:line+' L760,240 L0,240 Z',fill:col,'fill-opacity':'.22'}));
+    cs.svg.appendChild(node('path',{d:line,fill:'none',stroke:col,'stroke-width':'3','stroke-linejoin':'round'}));
+    cs.key.textContent='7D HIGH '+px(hi,s)+'  //  7D LOW '+px(lo,s)+'  //  7D '+fmtPct(pctChange(pts[0],pts[n-1]))+'  //  24H '+fmtPct(num(t.data.price_change_percentage_24h_in_currency))+'  //  '+n+' HOURLY POINTS';
+    showAt(n-1);
+  }
+  if(cs.plot){
+    var move=function(e){ if(!series) return; var r=cs.plot.getBoundingClientRect(); var f=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)); showAt(Math.round(f*(series.pts.length-1))); };
+    cs.plot.addEventListener('pointermove',move); cs.plot.addEventListener('pointerdown',move);
+    cs.plot.addEventListener('pointerleave',function(){ if(series) showAt(series.pts.length-1); });
+  }
+
+  /* ---- what is behind each star percent ---- */
+  var rkey=document.getElementById('radarKey');
+  function radarKey(t){
+    if(!rkey) return; wipe(rkey);
+    var d=t.data; if(!d||!t.scores) return;
+    var rows=[
+      ['SIZE',t.scores[0],'RANK #'+(d.market_cap_rank||'--')+' BY MARKET CAP'],
+      ['VOLUME',t.scores[1],big(num(d.total_volume))+' TRADED IN 24H'],
+      ['AGE',t.scores[2],(new Date().getFullYear()-t.launch)+' YRS SINCE '+t.launch],
+      ['LIQUIDITY',t.scores[3],'VOLUME IS '+(num(d.total_volume)/Math.max(num(d.market_cap),1)*100).toFixed(1)+'% OF MARKET CAP'],
+      ['BUZZ',t.scores[4],'24H '+fmtPct(num(d.price_change_percentage_24h_in_currency))+' // 7D '+fmtPct(num(d.price_change_percentage_7d_in_currency))+' // '+(t.news||0)+' NEWS']
+    ];
+    rows.forEach(function(r){ var row=el('div','rk'); row.appendChild(el('b',null,r[0]+' '+r[1]+'%')); row.appendChild(el('span',null,r[2])); rkey.appendChild(row); });
   }
 
   /* ---- build the list ---- */
@@ -154,13 +225,14 @@
     document.getElementById('selRank').textContent=t.rank?ord(t.rank):'--';
     document.getElementById('selBpm').textContent=t.scores?Math.round(60+t.scores[4]*0.9):'--';
     tween(t.scores||[0,0,0,0,0]);
+    radarKey(t);
     drawSpark(t);
   }
 
   /* ---- fetch + refresh ---- */
   function apply(arr){
     arr.forEach(function(d){
-      TOKENS.forEach(function(t){ if(t.id===d.id){ t.data=d; t.scores=scoreOf(d,t); t.spark=(d.sparkline_in_7d&&Array.isArray(d.sparkline_in_7d.price))?d.sparkline_in_7d.price.map(num):null; } });
+      TOKENS.forEach(function(t){ if(t.id===d.id||t.alt===d.id){ t.data=d; t.scores=scoreOf(d,t); t.spark=(d.sparkline_in_7d&&Array.isArray(d.sparkline_in_7d.price))?d.sparkline_in_7d.price.map(num):null; } });
     });
     TOKENS.filter(function(t){return t.scores;})
       .sort(function(a,b){ return avg(b.scores)-avg(a.scores); })
@@ -172,11 +244,12 @@
       t.chip.textContent=fmtPct(ch);
       t.chip.style.color=ch>=0?'':'#ff6a7a';
     });
+    TOKENS.forEach(function(t){ if(!t.data) t.sm.textContent=t.tick+' // no feed'; });
     if(selected) choose(selected);
   }
   function refresh(){
     if(document.hidden) return;
-    fetch(API+TOKENS.map(function(t){return t.id;}).join(','),{cache:'no-store'})
+    fetch(API+idList(),{cache:'no-store'})
       .then(function(r){ if(!r.ok) throw new Error('feed'); return r.json(); })
       .then(function(arr){ if(!Array.isArray(arr)) throw new Error('feed'); apply(arr); })
       .catch(function(){
@@ -230,7 +303,6 @@
     overview:null,
     tokens:['SELECT TOKEN','SIGNAL ACTIVITY'],
     stories:['NEWS STORIES'],
-    evidence:['EVIDENCE'],
     legislation:['LEGISLATION','ZONE LOAD','BILL TRACKER','TOKENIZATION'],
     lore:['THE LITTLE MAN RISES']
   };
@@ -297,7 +369,7 @@
     var np=panel('NEWS STORIES'), lp=panel('LEGISLATION'), zp=panel('ZONE LOAD');
     var stamp=data.updated?('UPDATED '+data.updated.slice(0,10)+' // HEADLINES LINK TO SOURCES'):'FIRST UPDATE PENDING';
     if(np){
-      var rows=(data.stories||[]).slice(0,wide?12:5).map(function(s){ return storyRow(s,STICK[s.tag]||'y'); });
+      var rows=(data.stories||[]).slice(0,wide?16:5).map(function(s){ return storyRow(s,STICK[s.tag]||'y'); });
       var box=np.querySelector('.pb');
       fill(box,rows,'NEWS UPDATES DAILY // FIRST RUN PENDING');
       box.appendChild(el('div','row',stamp));
@@ -333,6 +405,7 @@
     .then(function(r){ if(!r.ok) throw new Error('news'); return r.json(); })
     .then(function(d){
       data=d; render();
+      var sn=document.getElementById('statNews'); if(sn) sn.textContent=('00'+(d.stories||[]).length).slice(-3);
       document.dispatchEvent(new CustomEvent('crippin:news',{detail:d}));
     })
     .catch(function(){ /* leave the placeholder text in place */ });
@@ -388,6 +461,8 @@
   }
   fetch('data/gov.json',{cache:'no-cache'})
     .then(function(r){ if(!r.ok) throw new Error('gov'); return r.json(); })
-    .then(function(d){ bills(d); rwa(d); })
+    .then(function(d){ bills(d); rwa(d);
+      var sb=document.getElementById('statBills'); if(sb&&(d.bills||[]).length) sb.textContent=('00'+d.bills.length).slice(-3);
+      var sr=document.getElementById('statRwa'); if(sr&&d.rwa&&d.rwa.total) sr.textContent=money(d.rwa.total); })
     .catch(function(){ /* leave placeholders */ });
 })();

@@ -21,3 +21,5 @@ totals from DefiLlama. Edit `BILLS` at the top of the script to track other bill
 
 ## Checks
 `tests/` and `.github/workflows/checks.yml` run on every push. CodeQL and Dependabot are set up in `.github/`.
+
+The token list is the group the crypto community most often links to the ISO 20022 messaging standard. That is community talk, not an official certification.

@@ -41,7 +41,7 @@
     <div class="brand">CRIPPIN CONSOLE<small>Keep scrolling, little man!</small></div>
     <div class="nav">
       <a class="on" href="#">OVERVIEW</a><a href="#">TOKENS</a><a href="#">STORIES</a>
-      <a href="#">EVIDENCE</a><a href="#">LEGISLATION</a><a href="#">LORE</a>
+      <a href="#">LEGISLATION</a><a href="#">LORE</a>
     </div>
     <div class="badge">99</div>
   </div>
@@ -49,9 +49,9 @@
   <div class="board">
 
     <div class="p stat y c3"><div class="k1">TOKENS TRACKED</div><div class="v" id="statTok">000</div><div class="d">live count</div></div>
-    <div class="p stat k c3"><div class="k1">STORIES LOGGED</div><div class="v">000</div><div class="d">sample count</div></div>
-    <div class="p stat b c3"><div class="k1">EVIDENCE FILES</div><div class="v">000</div><div class="d">sample count</div></div>
-    <div class="p stat g c3"><div class="k1">BILLS WATCHED</div><div class="v">000</div><div class="d">sample count</div></div>
+    <div class="p stat k c3"><div class="k1">STORIES LOGGED</div><div class="v" id="statNews">000</div><div class="d">in today's feed</div></div>
+    <div class="p stat b c3"><div class="k1">RWA LOCKED</div><div class="v" id="statRwa">$--</div><div class="d">tokenized assets</div></div>
+    <div class="p stat g c3"><div class="k1">BILLS WATCHED</div><div class="v" id="statBills">000</div><div class="d">live count</div></div>
 
     <!-- token select -->
     <div class="p tok c8">
@@ -60,12 +60,13 @@
         <text x="50" y="46" text-anchor="middle" font-family="Press Start 2P" font-size="10" fill="#111">NO</text>
         <text x="50" y="63" text-anchor="middle" font-family="Press Start 2P" font-size="8" fill="#ff3045">SCAMS!</text></svg>
       </div>
-      <div class="ph y"><h3>SELECT TOKEN</h3><div class="tag">VETTED LIST // LIVE</div></div>
+      <div class="ph y"><h3>SELECT TOKEN</h3><div class="tag">ISO 20022 WATCH // COMMUNITY-CITED // LIVE</div></div>
       <div class="tokwrap">
         <div class="sel">
           <div class="lab"><span class="a"><small>RANK</small><span id="selRank">--</span></span><span class="b"><small>BUZZ</small><span id="selBpm">107</span>bpm</span></div>
           <div class="banner"><b id="selName">EXAMPLE TOKEN 01</b><span id="selTick">/EX1</span></div>
           <svg id="radar" class="radar" viewBox="0 0 200 200"></svg>
+          <div id="radarKey" class="rkey"></div>
         </div>
         <div class="tlist" id="tlist"></div>
       </div>
@@ -129,19 +130,9 @@
       </div>
     </div>
 
-    <!-- evidence -->
-    <div class="p c4">
-      <div class="ph o"><h3>EVIDENCE</h3><div class="tag">VAULT // SAMPLE</div></div>
-      <div class="pb">
-        <div class="row"><span class="sticker g">FILE-001</span><span>document / screenshot / thread slot</span></div>
-        <div class="row"><span class="sticker g">FILE-002</span><span>document / screenshot / thread slot</span></div>
-        <div class="row"><span class="sticker g">FILE-003</span><span>document / screenshot / thread slot</span></div>
-        <div class="row"><span class="sticker g">FILE-004</span><span>document / screenshot / thread slot</span></div>
-      </div>
-    </div>
 
     <!-- legislation -->
-    <div class="p c4">
+    <div class="p c6">
       <div class="ph k"><h3>LEGISLATION</h3><div class="tag">WATCHLIST // SAMPLE</div></div>
       <div class="pb">
         <svg viewBox="0 0 300 96">
@@ -159,7 +150,7 @@
     </div>
 
     <!-- lore -->
-    <div class="p c4">
+    <div class="p c6">
       <div class="burst-wrap" style="top:-38px;right:-18px;width:92px;height:92px;transform:rotate(-10deg)">
         <svg viewBox="0 0 100 100"><polygon class="burst" fill="#ff4fa3" stroke="#111" stroke-width="3"/>
         <text x="50" y="46" text-anchor="middle" font-family="Press Start 2P" font-size="10" fill="#fff" stroke="#111" stroke-width=".4">FREE</text>

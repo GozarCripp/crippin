@@ -31,7 +31,8 @@ def gnews(query, days):
 
 
 # ---- edit these to change what the site tracks -------------------------------------
-COINS = {"XRP": "XRP Ripple", "HBAR": "HBAR Hedera", "XLM": "Stellar XLM"}
+COINS = {"XRP": "XRP Ripple", "HBAR": "HBAR Hedera", "XLM": "Stellar XLM", "QNT": "Quant QNT crypto",
+         "ALGO": "Algorand ALGO", "XDC": "XDC Network", "IOTA": "IOTA crypto", "ADA": "Cardano ADA"}
 GENERAL = gnews("cryptocurrency", 2)
 FALLBACK_FEEDS = ["https://www.coindesk.com/arc/outboundfeeds/rss/",
                   "https://cointelegraph.com/rss"]
@@ -44,7 +45,7 @@ TOPICS = [
     ("TOKENIZATION", "TOKEN",    "tokenization real-world assets"),
 ]
 TOPIC_DAYS = 3
-MAX_STORIES, MAX_LEGIS = 12, 8
+MAX_STORIES, MAX_LEGIS = 16, 8
 # -------------------------------------------------------------------------------------
 
 
@@ -125,7 +126,7 @@ def build():
     for sym, query in COINS.items():
         items = safe(gnews(query, 2))
         coin_counts[sym] = len(items)
-        take(items, sym, 2)
+        take(items, sym, 1)
     # 2) general crypto headlines
     take(safe(GENERAL), "CRYPTO", 4)
     # 3) only if still thin, fall back to direct crypto-news feeds
