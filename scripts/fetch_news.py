@@ -142,14 +142,18 @@ def build():
     for name, short, query in TOPICS:
         items = [i for i in safe(gnews(query, TOPIC_DAYS)) if i["published"] >= cutoff]
         count = len(items)
-        topics.append({"name": name, "tag": short, "count": count,
-                       "buzz": min(100, count * 5)})   # 20+ stories in 3 days = 100
+        topics.append({"name": name, "tag": short, "count": count})
         for item in items[:2]:
             k = key(item["title"])
             if k not in legis_seen:
                 legis_seen.add(k)
                 legis.append((item["published"], out_item(item, short)))
     legis.sort(key=lambda x: x[0], reverse=True)
+    # buzz is relative: the busiest topic = 100, the rest scale against it,
+    # so the bars show which bill is loudest instead of all pinning at 100
+    top = max((t["count"] for t in topics), default=0)
+    for t in topics:
+        t["buzz"] = round(t["count"] * 100 / top) if top else 0
     topics.sort(key=lambda t: t["buzz"], reverse=True)
 
     return {

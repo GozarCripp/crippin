@@ -157,34 +157,34 @@
   },
   "topics": [
    {
-    "name": "CLARITY ACT",
-    "tag": "CLARITY",
-    "count": 23,
-    "buzz": 100
-   },
-   {
-    "name": "GENIUS ACT",
-    "tag": "GENIUS",
-    "count": 39,
-    "buzz": 100
-   },
-   {
     "name": "SEC + CRYPTO",
     "tag": "SEC",
     "count": 61,
     "buzz": 100
    },
    {
-    "name": "CONGRESS",
-    "tag": "CONGRESS",
-    "count": 28,
-    "buzz": 100
-   },
-   {
     "name": "TOKENIZATION",
     "tag": "TOKEN",
     "count": 50,
-    "buzz": 100
+    "buzz": 82
+   },
+   {
+    "name": "GENIUS ACT",
+    "tag": "GENIUS",
+    "count": 39,
+    "buzz": 64
+   },
+   {
+    "name": "CONGRESS",
+    "tag": "CONGRESS",
+    "count": 28,
+    "buzz": 46
+   },
+   {
+    "name": "CLARITY ACT",
+    "tag": "CLARITY",
+    "count": 23,
+    "buzz": 38
    }
   ]
  }

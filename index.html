@@ -39,7 +39,8 @@
 
   <div class="top">
     <div class="brand">CRIPPIN CONSOLE<small>Keep scrolling, little man!</small></div>
-    <div class="nav">
+    <button class="menu" id="menuBtn" aria-label="Jump to a section" aria-expanded="false" aria-controls="nav"><i></i><i></i><i></i></button>
+    <div class="nav" id="nav">
       <a class="on" href="#">OVERVIEW</a><a href="#">TOKENS</a><a href="#">STORIES</a>
       <a href="#">LEGISLATION</a><a href="#">LORE</a>
     </div>
@@ -132,7 +133,7 @@
 
 
     <!-- legislation -->
-    <div class="p c6">
+    <div class="p c12">
       <div class="ph k"><h3>LEGISLATION</h3><div class="tag">WATCHLIST // SAMPLE</div></div>
       <div class="pb">
         <svg viewBox="0 0 300 96">
@@ -149,20 +150,6 @@
       </div>
     </div>
 
-    <!-- lore -->
-    <div class="p c6">
-      <div class="burst-wrap" style="top:-38px;right:-18px;width:92px;height:92px;transform:rotate(-10deg)">
-        <svg viewBox="0 0 100 100"><polygon class="burst" fill="#ff4fa3" stroke="#111" stroke-width="3"/>
-        <text x="50" y="46" text-anchor="middle" font-family="Press Start 2P" font-size="10" fill="#fff" stroke="#111" stroke-width=".4">FREE</text>
-        <text x="50" y="64" text-anchor="middle" font-family="Press Start 2P" font-size="7" fill="#111">TO READ</text></svg>
-      </div>
-      <div class="ph y"><h3>THE LITTLE MAN RISES</h3><div class="tag">LORE</div></div>
-      <div class="pb">
-        <div class="caption">MEANWHILE, IN THE UNDERGRID...</div>
-        <div style="line-height:1.6">Lore text lives here. A running narrative for the world behind the archive: chapters, faction notes, field reports. A record, not a pitch. Nothing for sale.</div>
-      </div>
-    </div>
-
     <!-- bill tracker -->
     <div class="p c8">
       <div class="ph b"><h3>BILL TRACKER</h3><div class="tag">CONGRESS.GOV + FED REGISTER // DAILY</div></div>
@@ -173,6 +160,20 @@
     <div class="p c4">
       <div class="ph g"><h3>TOKENIZATION</h3><div class="tag">DEFILLAMA // DAILY</div></div>
       <div class="pb" id="rwaBox"><div class="row">REAL-WORLD ASSET STATS UPDATE DAILY // FIRST RUN PENDING</div></div>
+    </div>
+
+    <!-- lore -->
+    <div class="p c12 lore">
+      <div class="burst-wrap" style="top:-38px;right:-18px;width:92px;height:92px;transform:rotate(-10deg)">
+        <svg viewBox="0 0 100 100"><polygon class="burst" fill="#ff4fa3" stroke="#111" stroke-width="3"/>
+        <text x="50" y="46" text-anchor="middle" font-family="Press Start 2P" font-size="10" fill="#fff" stroke="#111" stroke-width=".4">FREE</text>
+        <text x="50" y="64" text-anchor="middle" font-family="Press Start 2P" font-size="7" fill="#111">TO READ</text></svg>
+      </div>
+      <div class="ph y"><h3>THE LITTLE MAN RISES</h3><div class="tag">LORE</div></div>
+      <div class="pb">
+        <div class="caption">MEANWHILE, IN THE UNDERGRID...</div>
+        <div style="line-height:1.6">Lore text lives here. A running narrative for the world behind the archive: chapters, faction notes, field reports. A record, not a pitch. Nothing for sale.</div>
+      </div>
     </div>
 
   </div>

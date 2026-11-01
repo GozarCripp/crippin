@@ -69,7 +69,7 @@
   .ph.y{border-bottom-color:var(--yellow);} .ph.k{border-bottom-color:var(--pink);} .ph.b{border-bottom-color:var(--blue);}
   .ph.g{border-bottom-color:var(--lime);} .ph.o{border-bottom-color:var(--orange);}
   .pb{ padding:12px 16px 14px; }
-  .c3{grid-column:span 3;} .c4{grid-column:span 4;} .c8{grid-column:span 8;}
+  .c3{grid-column:span 3;} .c4{grid-column:span 4;} .c6{grid-column:span 6;} .c8{grid-column:span 8;} .c12{grid-column:span 12;}
 
   .stat{ padding:12px 16px; }
   .stat .k1{ font-weight:500; font-size:10px; letter-spacing:2px; color:var(--dim); }
@@ -230,7 +230,6 @@
 .bill i.ball{ color:var(--yellow); }
 
 /* ---- layout + chart ---- */
-.c6{ grid-column:span 6; }
 .chart{ display:grid; grid-template-columns:76px 1fr; gap:0 8px; }
 .yax{ position:relative; height:240px; }
 .yax span{ position:absolute; right:0; transform:translateY(-50%); font-size:10px; color:var(--dim); white-space:nowrap; }
@@ -247,3 +246,37 @@
 .rk{ padding:4px 0; border-bottom:1px dashed rgba(31,185,168,.45); line-height:1.35; }
 .rk b{ display:block; font-family:'Press Start 2P',monospace; font-weight:400; font-size:8px; color:var(--yellow); letter-spacing:1px; margin-bottom:3px; }
 .rk span{ font-size:10px; color:var(--dim); letter-spacing:.5px; }
+
+/* ---- 3-bar jump menu (phones/tablets) ----
+   Desktop keeps the inline tabs. Under 1100px the tabs fold into a drop list
+   that opens from the ☰ button, and the yellow bar sticks to the top so the
+   menu is always one tap away no matter how far down you scroll. */
+.menu{ display:none; background:var(--ink); border:2px solid var(--ink); border-radius:4px;
+  box-shadow:inset 0 0 0 1px var(--teal); padding:9px 8px; cursor:pointer; }
+.menu i{ display:block; width:24px; height:3px; background:var(--lime); margin:4px 0; transition:transform .15s, opacity .15s; }
+.menu[aria-expanded="true"] i:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.menu[aria-expanded="true"] i:nth-child(2){ opacity:0; }
+.menu[aria-expanded="true"] i:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+.menu:focus-visible{ outline:3px solid var(--pink); outline-offset:2px; }
+
+.row > span:last-child{ flex:1; min-width:0; overflow-wrap:anywhere; }
+
+@media (max-width:1100px){
+  .top{ position:sticky; top:0; z-index:50; flex-direction:row; flex-wrap:wrap; align-items:center; padding:8px 12px; }
+  .brand{ font-size:16px; flex:1; }
+  .badge{ display:none; }
+  .menu{ display:block; }
+  .nav{ display:none; position:absolute; top:100%; left:-3px; right:-3px; flex-direction:column; gap:0;
+    background:var(--ink); border:3px solid var(--ink); border-top:0; box-shadow:0 0 0 2px var(--teal), 0 12px 24px rgba(0,0,0,.6); }
+  .nav.open{ display:flex; }
+  .nav a{ font-size:12px; padding:14px 16px; border-radius:0; border:0; border-top:1px dashed var(--teal); box-shadow:none; }
+  .c3{ grid-column:span 6; }          /* stat cards 2x2 instead of 4 tall rows */
+  .stat .v, .stat.y .v, .stat.k .v, .stat.b .v, .stat.g .v{ font-size:24px; }
+  .row{ flex-wrap:wrap; }             /* time + tag on one line, headline full width below */
+  .row > span:last-child{ flex-basis:100%; }
+  .tlist{ height:360px; }
+}
+
+/* links inside panels: browser default blue was unreadable on teal */
+.pb a{ color:var(--lime); }
+.pb a:hover, .pb a:focus-visible{ color:var(--yellow); }

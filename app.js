@@ -466,3 +466,19 @@
       var sr=document.getElementById('statRwa'); if(sr&&d.rwa&&d.rwa.total) sr.textContent=money(d.rwa.total); })
     .catch(function(){ /* leave placeholders */ });
 })();
+
+/* ---- 3-bar jump menu ----
+   The button flips aria-expanded (screen readers announce open/closed) and the
+   .open class (CSS shows the list). Picking a tab, tapping outside, or Escape
+   closes it. Tabs already switch views through the URL hash (see nav above),
+   so the menu only has to open and close; it then scrolls to the top so the
+   chosen section is in view. */
+(function(){
+  var btn=document.getElementById('menuBtn'), nav=document.getElementById('nav');
+  if(!btn||!nav) return;
+  function set(open){ nav.classList.toggle('open',open); btn.setAttribute('aria-expanded',open?'true':'false'); }
+  btn.addEventListener('click',function(e){ e.stopPropagation(); set(!nav.classList.contains('open')); });
+  nav.addEventListener('click',function(e){ if(e.target.closest('a')){ set(false); window.scrollTo(0,0); } });
+  document.addEventListener('click',function(e){ if(!nav.contains(e.target)) set(false); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ set(false); btn.focus(); } });
+})();
