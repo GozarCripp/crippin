@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09T23:27:10Z",
+ "updated": "2026-11-10T20:51:13Z",
  "bills": [
   {
    "id": "H.R. 3633",
@@ -29,6 +29,13 @@
   }
  ],
  "rules": [
+  {
+   "title": "Notice Pursuant to the National Cooperative Research and Production Act of 1993-Blockchain Security Standards Council, Inc.",
+   "agency": "Justice Department",
+   "type": "Notice",
+   "date": "2026-11-10",
+   "url": "https://www.federalregister.gov/documents/2026/11/10/2026-22912/notice-pursuant-to-the-national-cooperative-research-and-production-act-of-1993-blockchain-security"
+  },
   {
    "title": "Threshold for the Requirement To Collect, Retain, and Transmit Information on Funds Transfers and Transmittals of Funds That Begin or End Outside the…",
    "agency": "Treasury Department",
@@ -77,73 +84,66 @@
    "type": "Proposed Rule",
    "date": "2026-10-13",
    "url": "https://www.federalregister.gov/documents/2026/10/13/2026-20888/regulation-crypto-asset-transactions-and-regulation-crypto-asset-markets"
-  },
-  {
-   "title": "Proposed Agency Information Collection Activities; Comment Request",
-   "agency": "National Credit Union Administration",
-   "type": "Notice",
-   "date": "2026-10-09",
-   "url": "https://www.federalregister.gov/documents/2026/10/09/2026-20729/proposed-agency-information-collection-activities-comment-request"
   }
  ],
  "rwa": {
-  "total": 3621348890,
+  "total": 3619778704,
   "count": 119,
   "top": [
    {
     "name": "Re",
-    "tvl": 488033497,
-    "d1": 0.5549611390818683,
-    "d7": 1.9391785743633676,
+    "tvl": 487428295,
+    "d1": -0.13019932525855893,
+    "d7": 1.6907802767192948,
     "url": "https://defillama.com/protocol/re"
    },
    {
     "name": "Ethena USDtb",
-    "tvl": 416639975,
-    "d1": 0.0283870724434081,
-    "d7": -13.926286566000087,
+    "tvl": 416592433,
+    "d1": -0.022580731059690606,
+    "d7": -13.971283314109684,
     "url": "https://defillama.com/protocol/ethena-usdtb"
    },
    {
     "name": "Huma",
-    "tvl": 344897119,
-    "d1": 0.010497211809749274,
-    "d7": -6.8370446669495095,
+    "tvl": 345417951,
+    "d1": 0.14677332568228962,
+    "d7": -2.8817377934156525,
     "url": "https://defillama.com/protocol/huma"
    },
    {
     "name": "OnRe",
-    "tvl": 309274524,
-    "d1": -0.020091300471676732,
-    "d7": 0.6241724411517424,
+    "tvl": 309364552,
+    "d1": 0.011718498143991951,
+    "d7": 0.6296345614479577,
     "url": "https://defillama.com/protocol/onre"
    },
    {
     "name": "OpenTrade",
-    "tvl": 244024429,
-    "d1": -0.633102964826918,
-    "d7": -0.9567293505339052,
+    "tvl": 243895756,
+    "d1": -0.49366426140493047,
+    "d7": -0.7900337530724215,
     "url": "https://defillama.com/protocol/opentrade"
    },
    {
     "name": "Plume Vaults",
-    "tvl": 219109733,
-    "d1": -0.17782699937998814,
-    "d7": -3.1098626625776404,
+    "tvl": 219782191,
+    "d1": 0.7656433085558376,
+    "d7": -1.974358696868208,
     "url": "https://defillama.com/protocol/plume-vaults"
    },
    {
     "name": "R25",
-    "tvl": 197790731,
-    "d1": 0.047591361396243315,
-    "d7": 0.6492413483019277,
+    "tvl": 197869763,
+    "d1": 0.04432043521273954,
+    "d7": 0.6385667179612824,
     "url": "https://defillama.com/protocol/r25"
    },
    {
     "name": "USD AI",
-    "tvl": 157814792,
-    "d1": 0.005067114689282448,
-    "d7": -6.300224599131781,
+    "tvl": 157855098,
+    "d1": 0.019931284307290298,
+    "d7": -5.62642539813271,
     "url": "https://defillama.com/protocol/usd-ai"
    }
   ]
