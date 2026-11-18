@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17T22:26:38Z",
+ "updated": "2026-11-18T21:59:36Z",
  "bills": [
   {
    "id": "H.R. 3633",
@@ -44,13 +44,6 @@
    "url": "https://www.federalregister.gov/documents/2026/11/09/2026-22809/threshold-for-the-requirement-to-collect-retain-and-transmit-information-on-funds-transfers-and"
   },
   {
-   "title": "Self-Regulatory Organizations; NYSE Arca, Inc.; Notice of Filing and Immediate Effectiveness of Proposed Rule Change To List Shares of the Bitwise 10…",
-   "agency": "Securities and Exchange Commission",
-   "type": "Notice",
-   "date": "2026-11-03",
-   "url": "https://www.federalregister.gov/documents/2026/11/03/2026-22374/self-regulatory-organizations-nyse-arca-inc-notice-of-filing-and-immediate-effectiveness-of-proposed"
-  },
-  {
    "title": "Agency Information Collection Activities: Proposed Information Collection; Submission for OMB Review; Applications for Licensing or Registration To I…",
    "agency": "Treasury Department",
    "type": "Notice",
@@ -84,66 +77,73 @@
    "type": "Proposed Rule",
    "date": "2026-10-13",
    "url": "https://www.federalregister.gov/documents/2026/10/13/2026-20888/regulation-crypto-asset-transactions-and-regulation-crypto-asset-markets"
+  },
+  {
+   "title": "Adviser and Regulated Fund Custody Rules; Crypto Custody Rules",
+   "agency": "Securities and Exchange Commission",
+   "type": "Proposed Rule",
+   "date": "2026-10-06",
+   "url": "https://www.federalregister.gov/documents/2026/10/06/2026-20466/adviser-and-regulated-fund-custody-rules-crypto-custody-rules"
   }
  ],
  "rwa": {
-  "total": 3056684734,
-  "count": 109,
+  "total": 3034063539,
+  "count": 110,
   "top": [
    {
     "name": "Re",
-    "tvl": 469629180,
-    "d1": -0.43525893148027706,
-    "d7": -3.651637542619497,
+    "tvl": 469593743,
+    "d1": -0.007545742577605097,
+    "d7": -3.637302378922257,
     "url": "https://defillama.com/protocol/re"
    },
    {
     "name": "Huma",
-    "tvl": 351416460,
-    "d1": -4.196594453496871,
-    "d7": 1.730104227256362,
+    "tvl": 339461117,
+    "d1": -3.4120507353087532,
+    "d7": -1.7995617987080976,
     "url": "https://defillama.com/protocol/huma"
    },
    {
     "name": "Ethena USDtb",
-    "tvl": 324979017,
-    "d1": 2.2419649899647567,
-    "d7": -21.96921974435712,
+    "tvl": 314889989,
+    "d1": -3.070026683851296,
+    "d7": -24.41322310522594,
     "url": "https://defillama.com/protocol/ethena-usdtb"
    },
    {
     "name": "OnRe",
-    "tvl": 293307567,
-    "d1": -1.5905506687143998,
-    "d7": -5.149951056885328,
+    "tvl": 292935910,
+    "d1": -0.2371054333153637,
+    "d7": -5.273542745297803,
     "url": "https://defillama.com/protocol/onre"
    },
    {
     "name": "R25",
-    "tvl": 195162430,
-    "d1": -1.6096079437447486,
-    "d7": -1.3767366965928147,
+    "tvl": 195298907,
+    "d1": 0.052692601103714765,
+    "d7": -1.331313782092252,
     "url": "https://defillama.com/protocol/r25"
    },
    {
-    "name": "Plume Vaults",
-    "tvl": 158157445,
-    "d1": 0.25507728025175425,
-    "d7": -28.038340272871636,
-    "url": "https://defillama.com/protocol/plume-vaults"
-   },
-   {
     "name": "USD AI",
-    "tvl": 157301237,
-    "d1": 0.005004180700993288,
-    "d7": -0.35892332050518405,
+    "tvl": 159119090,
+    "d1": 1.16288477886701,
+    "d7": 0.8063670227549125,
     "url": "https://defillama.com/protocol/usd-ai"
    },
    {
+    "name": "Plume Vaults",
+    "tvl": 157837808,
+    "d1": -0.20210084956036667,
+    "d7": -28.700225643683012,
+    "url": "https://defillama.com/protocol/plume-vaults"
+   },
+   {
     "name": "RealT Tokens",
-    "tvl": 155054435,
-    "d1": -0.003475196021042848,
-    "d7": 0.004093955395646276,
+    "tvl": 155046653,
+    "d1": -0.010692334024199113,
+    "d7": -0.006370146691082823,
     "url": "https://defillama.com/protocol/realt-tokens"
    }
   ]
