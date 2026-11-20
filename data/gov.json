@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-19T22:10:47Z",
+ "updated": "2026-11-20T21:50:20Z",
  "bills": [
   {
    "id": "H.R. 3633",
@@ -65,13 +65,6 @@
    "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21705/agency-information-collection-activities-proposed-information-collection-submission-for-omb-review"
   },
   {
-   "title": "Agency Information Collection Activities: Proposed Information Collection; Submission for OMB Review; Applications for Licensing or Registration To I…",
-   "agency": "Treasury Department",
-   "type": "Notice",
-   "date": "2026-10-23",
-   "url": "https://www.federalregister.gov/documents/2026/10/23/2026-21704/agency-information-collection-activities-proposed-information-collection-submission-for-omb-review"
-  },
-  {
    "title": "Regulation Crypto Asset Transactions and Regulation Crypto Asset Markets",
    "agency": "Commodity Futures Trading Commission",
    "type": "Proposed Rule",
@@ -87,64 +80,64 @@
   }
  ],
  "rwa": {
-  "total": 3052703711,
-  "count": 110,
+  "total": 2859824568,
+  "count": 106,
   "top": [
    {
     "name": "Re",
-    "tvl": 468334696,
-    "d1": -0.27061717014829867,
-    "d7": -4.078769876386659,
+    "tvl": 460419286,
+    "d1": -1.705524437815967,
+    "d7": -5.5613963488692235,
     "url": "https://defillama.com/protocol/re"
    },
    {
     "name": "Huma",
-    "tvl": 361710714,
-    "d1": 6.553669820789025,
-    "d7": 4.725025981327107,
+    "tvl": 356257532,
+    "d1": 5.011690003782803,
+    "d7": 3.3998814423290753,
     "url": "https://defillama.com/protocol/huma"
    },
    {
     "name": "Ethena USDtb",
-    "tvl": 314560750,
-    "d1": -0.11111562108312967,
-    "d7": -24.693382336953817,
+    "tvl": 314803838,
+    "d1": 0.0772786493564297,
+    "d7": -0.9954641698095941,
     "url": "https://defillama.com/protocol/ethena-usdtb"
    },
    {
     "name": "OnRe",
-    "tvl": 291760385,
-    "d1": -0.40281093485727126,
-    "d7": -5.6649041181241415,
+    "tvl": 289568884,
+    "d1": -0.7511303650867518,
+    "d7": -6.242406964003706,
     "url": "https://defillama.com/protocol/onre"
    },
    {
     "name": "R25",
-    "tvl": 195254515,
-    "d1": -0.016081300135397214,
-    "d7": -1.438323138986803,
+    "tvl": 195002444,
+    "d1": -0.13387067358293336,
+    "d7": -1.6217817626894941,
     "url": "https://defillama.com/protocol/r25"
    },
    {
     "name": "USD AI",
-    "tvl": 159139642,
-    "d1": 0.01291557258167586,
-    "d7": 1.182144369338701,
+    "tvl": 159141264,
+    "d1": 0.0010192743410186722,
+    "d7": 1.1809046652092832,
     "url": "https://defillama.com/protocol/usd-ai"
    },
    {
-    "name": "Plume Vaults",
-    "tvl": 158438637,
-    "d1": 0.3775995542398789,
-    "d7": -28.308804747870724,
-    "url": "https://defillama.com/protocol/plume-vaults"
+    "name": "RealT Tokens",
+    "tvl": 155033337,
+    "d1": -0.012067977661260443,
+    "d7": -0.006706866423357383,
+    "url": "https://defillama.com/protocol/realt-tokens"
    },
    {
-    "name": "RealT Tokens",
-    "tvl": 155052049,
-    "d1": -0.006410398268883455,
-    "d7": 0.009206836460990075,
-    "url": "https://defillama.com/protocol/realt-tokens"
+    "name": "Theo Network thUSD",
+    "tvl": 138603660,
+    "d1": 0.006831996107109717,
+    "d7": 0.018150560855303866,
+    "url": "https://defillama.com/protocol/theo-network-thusd"
    }
   ]
  }
